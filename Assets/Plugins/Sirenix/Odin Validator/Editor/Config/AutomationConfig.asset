@@ -20,19 +20,19 @@ MonoBehaviour:
   OnPlayModeSetup:
     Profile: 0
     ProfileAsset: {fileID: 0}
-  OnBuild: 0
+  OnBuild: 1
   OnBuildIfWarnings: 0
   OnBuildIfErrors: 3
   OnBuildAlwaysCompleteValidationFully: 0
   OnBuildFlashScreen: 0
   OnBuildSetup:
     Profile: 0
-    ProfileAsset: {fileID: 0}
-  OnProjectStartup: 0
+    ProfileAsset: {fileID: 11400000, guid: 238c041df7221674282b033d796e2be6, type: 2}
+  OnProjectStartup: 1
   OnProjectStartupIfWarnings: 0
   OnProjectStartupIfErrors: 1
   OnProjectStartupAlwaysCompleteValidationFully: 0
   OnProjectStartupFlashScreen: 0
   OnProjectStartupSetup:
     Profile: 0
-    ProfileAsset: {fileID: 0}
+    ProfileAsset: {fileID: 11400000, guid: 238c041df7221674282b033d796e2be6, type: 2}

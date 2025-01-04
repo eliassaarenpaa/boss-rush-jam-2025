@@ -171,6 +171,13 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "dev.n5y.asmdefhelper": {
+      "version": "https://github.com/eliassaarenpaa/AsmdefHelper.git?path=Assets",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "dac4647b96c7f9065988032343bc5d48af085be9"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 1,

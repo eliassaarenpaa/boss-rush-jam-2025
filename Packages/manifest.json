@@ -22,6 +22,7 @@
     "com.unity.modules.tilemap": "1.0.0",
     "com.unity.modules.ui": "1.0.0",
     "com.unity.modules.uielements": "1.0.0",
-    "com.unity.modules.umbra": "1.0.0"
+    "com.unity.modules.umbra": "1.0.0",
+	"dev.n5y.asmdefhelper": "https://github.com/eliassaarenpaa/AsmdefHelper.git?path=Assets"
   }
 }

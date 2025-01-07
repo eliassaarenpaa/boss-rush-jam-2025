@@ -16,5 +16,6 @@ MonoBehaviour:
     LoadedProjectGUID:
       valueInternal: 
     RecentlyOpenedProjectPath:
-      valueInternal: 
-    RecentlyOpenedProjectGUIDsList: []
+      valueInternal: Assets\Project\Runtime\Gameplay\Player\Model
+    RecentlyOpenedProjectGUIDsList:
+    - valueInternal: 58358cfb5dfd86f4483117ed31ff3e73

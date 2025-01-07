@@ -1,11 +1,13 @@
 {
   "dependencies": {
+    "com.unity.2d.sprite": "1.0.0",
     "com.unity.ai.navigation": "2.0.5",
     "com.unity.ide.rider": "3.0.34",
     "com.unity.inputsystem": "1.11.2",
     "com.unity.render-pipelines.universal": "17.0.3",
     "com.unity.timeline": "1.8.7",
     "com.unity.ugui": "2.0.0",
+    "dev.n5y.asmdefhelper": "https://github.com/eliassaarenpaa/AsmdefHelper.git?path=Assets",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
@@ -22,7 +24,6 @@
     "com.unity.modules.tilemap": "1.0.0",
     "com.unity.modules.ui": "1.0.0",
     "com.unity.modules.uielements": "1.0.0",
-    "com.unity.modules.umbra": "1.0.0",
-	"dev.n5y.asmdefhelper": "https://github.com/eliassaarenpaa/AsmdefHelper.git?path=Assets"
+    "com.unity.modules.umbra": "1.0.0"
   }
 }

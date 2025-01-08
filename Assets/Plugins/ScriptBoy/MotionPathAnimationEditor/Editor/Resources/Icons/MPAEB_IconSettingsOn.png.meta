@@ -111,6 +111,6 @@ AssetOrigin:
   serializedVersion: 1
   productId: 241255
   packageName: Motion Path Animation Editor
-  packageVersion: 2.5.4
-  assetPath: Assets/ScriptBoy/MotionPathAnimationEditor/Editor/Resources/Icons/MPAEB_IconSettingsOn.png
-  uploadId: 698110
+  packageVersion: 2.6.0
+  assetPath: Assets/Plugins/ScriptBoy/MotionPathAnimationEditor/Editor/Resources/Icons/MPAEB_IconSettingsOn.png
+  uploadId: 721946

@@ -1,3 +1,13 @@
+Version 2.6.0
+- Removed the Sync Time Range option from the Preferences window.
+- Removed the Time Range slider from the Motion Path Anim Editor window.
+- Updated the Time Range feature to automatically operate based on the visible time range in the Animation window.
+- Added the Show Time Ticks option in the Preferences window to display time ticks along motion paths.
+- Added the Show Time Labels option in the Preferences window to display time labels along motion paths.
+- Added the ability to toggle a column of buttons on or off in the Motion Path List with a right-click.
+- Added the Motion Path Utility API for creating or removing motion paths.
+- Fixed the issue with the Path Accuracy option not saving in the Preferences window.
+
 Version 2.5.4
 - Fixed: NullReferenceException (MotionPath.cs:179)
 - Fixed: ArgumentOutOfRangeException (MotionPath.cs:265)
@@ -60,8 +70,6 @@ Version 2.0.0
 Notes:
 - Delete the old version (1.x.x) before importing the new version (2.x.x).
 - The new version (2.x.x) has a different workflow and doesn't show the motion path automatically. (Please read the PDF file)
-
-
 
 
 Old Versions

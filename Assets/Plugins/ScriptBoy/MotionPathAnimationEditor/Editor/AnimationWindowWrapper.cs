@@ -10,11 +10,13 @@ namespace ScriptBoy.MotionPathAnimEditor
     {
         EditorWindow m_Window;
         object m_State;
+        List<float> m_TickCache;
 
         public AnimationWindowWrapper(EditorWindow window)
         {
             m_Window = window;
             m_State = Reflection.AnimationWindow.state.GetValue(m_Window);
+            m_TickCache = new List<float>();
         }
 
         public bool isDisposed => m_Window == null;
@@ -23,7 +25,15 @@ namespace ScriptBoy.MotionPathAnimEditor
         {
             get
             {
-              return  (float)Reflection.AnimationWindowState.currentTime.GetValue(m_State);
+                return (float)Reflection.AnimationWindowState.currentTime.GetValue(m_State);
+            }
+        }
+
+        public TimeFormat timeFormat
+        {
+            get
+            {
+                return (TimeFormat)Reflection.AnimationWindowState.timeFormat.GetValue(m_State);
             }
         }
 
@@ -43,12 +53,84 @@ namespace ScriptBoy.MotionPathAnimEditor
             }
         }
 
+        public float minVisibleTime
+        {
+            get
+            {
+                return (float)Reflection.AnimationWindowState.minVisibleTime.GetValue(m_State);
+            }
+        }
+
+        public float maxVisibleTime
+        {
+            get
+            {
+                return (float)Reflection.AnimationWindowState.maxVisibleTime.GetValue(m_State);
+            }
+        }
+
+        public Transform root
+        {
+            get
+            {
+                return rootGameObject.transform;
+            }
+        }
+
         public bool hasFocus
         {
             get
             {
                 return Convert.ToBoolean(Reflection.AnimationWindow.hasFocus.GetValue(m_Window));
             }
+        }
+
+
+        public int maxTickLevel
+        {
+            get
+            {
+                object timeArea = Reflection.AnimationWindowState.timeArea.GetValue(m_State);
+                object hTicks = Reflection.TimeArea.hTicks.GetValue(timeArea);
+                return (int)Reflection.TickHandler.GetLevelWithMinSeparation.Invoke(hTicks, MethodParameterArray.Get(40f));
+            }
+        }
+
+        public int GetTickFrameRate(int tickLevel)
+        {
+            object timeArea = Reflection.AnimationWindowState.timeArea.GetValue(m_State);
+            object hTicks = Reflection.TimeArea.hTicks.GetValue(timeArea);
+            m_TickCache.Clear();
+
+            Reflection.TickHandler.GetTicksAtLevel.Invoke(hTicks, MethodParameterArray.Get(tickLevel, false, m_TickCache));
+
+            float frameRate = animationClip.frameRate;
+
+            int min = int.MaxValue;
+            int max = int.MinValue;
+            int a = Mathf.RoundToInt(m_TickCache[0] * frameRate);
+            int n = Mathf.Min(m_TickCache.Count, 6);
+            for (int i = 1; i < n; i++)
+            {
+                int b = Mathf.RoundToInt(m_TickCache[i] * frameRate);
+                int delta = b - a;
+                min = Mathf.Min(min, delta);
+                max = Mathf.Max(max, delta);
+                a = b;
+            }
+
+            if (min == max) return max;
+
+            return min + max;
+        }
+
+
+        public string FormatTickTime(float time)
+        {
+            object timeArea = Reflection.AnimationWindowState.timeArea.GetValue(m_State);
+            float frameRate = animationClip.frameRate;
+            var timeFormat = this.timeFormat;
+            return (string)Reflection.TimeArea.FormatTime.Invoke(timeArea, MethodParameterArray.Get(time, frameRate, (int)timeFormat));
         }
 
         public void Focus()
@@ -146,7 +228,7 @@ namespace ScriptBoy.MotionPathAnimEditor
         {
             for (int i = 0; i < keys.Length; i++)
             {
-                if(keys[i] == null) return false;
+                if (keys[i] == null) return false;
                 if ((bool)Reflection.AnimationWindowState.KeyIsSelected.Invoke(m_State, new object[] { keys[i] })) return true;
             }
 
@@ -155,7 +237,7 @@ namespace ScriptBoy.MotionPathAnimEditor
 
         public void SelectKeyframes(object[] keys)
         {
-            if(!Settings.syncSelection) return;
+            if (!Settings.syncSelection) return;
 
             for (int i = 0; i < keys.Length; i++)
             {
@@ -191,5 +273,9 @@ namespace ScriptBoy.MotionPathAnimEditor
 
             return null;
         }
+
+
     }
+
+    public enum TimeFormat { None = 0, TimeFrame = 1, Frame = 2}
 }

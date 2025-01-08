@@ -147,11 +147,6 @@ namespace ScriptBoy.MotionPathAnimEditor
                 HideHandles.DrawFoldoutWindow();
             }
 
-            if (Settings.useTimeRange)
-            {
-                TimeRange.DrawFoldoutWindow();
-            }
-
             if (Settings.useMagnet)
             {
                 Magnet.DrawFoldoutWindow();
@@ -271,56 +266,4 @@ namespace ScriptBoy.MotionPathAnimEditor
             }
         }
     }
-
-    static class TimeRange
-    {
-        static float from = 0;
-        static float to = 1;
-
-        public static bool Contains(float time)
-        {
-            time /= AnimEditor.animationClip.length;
-            return time >= from && time <= to;
-        }
-
-        public static void DrawFoldoutWindow()
-        {
-            EditorGUI.BeginChangeCheck();
-            using (new CustomGUILayout.FoldoutWindowScope("Time Range", out bool open))
-            {
-                if (open)
-                {
-                    EditorGUILayout.MinMaxSlider(ref from, ref to, 0, 1);
-                }
-            }
-            if (EditorGUI.EndChangeCheck())
-            {
-                SceneView.RepaintAll();
-            }
-        }
-
-        public static void SyncWithCurrentTime()
-        {
-            float prevFrom = from;
-            float prevTo = to;
-            float time = Mathf.Clamp01(AnimEditor.animationWindow.time / AnimEditor.animationClip.length);
-            float delta = to - from;
-            from = time - delta / 2;
-            to = time + delta / 2;
-            if (from < 0)
-            {
-                to -= from;
-                from = 0;
-            }
-
-            if (to > 1)
-            {
-                from -= to - 1;
-                to = 1;
-            }
-
-            if(from != prevFrom || to != prevTo) AnimEditorWindow.RepaintWindow();
-        }
-    }
-
 }

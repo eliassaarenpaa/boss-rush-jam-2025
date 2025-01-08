@@ -6,39 +6,59 @@ namespace ScriptBoy.MotionPathAnimEditor
 {
     class AnimEditor
     {
+        public static AnimEditor instance { get; private set; }
         public static AnimationWindowWrapper animationWindow;
-
         public static AnimationClip animationClip;
-        public static GameObject rootGameObject;
-        public static Transform rootTransform;
+        public static Transform root;
         public static MotionPath rootMotionPath;
 
         public List<MotionPath> motionPaths;
 
-        public Dictionary<GameObject, MotionPath[]> history;
+        Dictionary<Transform, List<MotionPath>> motionPathsPerRoot;
 
         public bool editMode;
 
         public AnimEditor()
         {
             motionPaths = new List<MotionPath>();
-            history = new Dictionary<GameObject, MotionPath[]>();
+            motionPathsPerRoot = new Dictionary<Transform, List<MotionPath>>();
 #if UNITY_2019_1_OR_NEWER
             SceneView.duringSceneGui +=  OnSceneGUI;
 #else
             SceneView.onSceneGUIDelegate += OnSceneGUI;
 #endif
             Undo.undoRedoPerformed += UndoRedoPerformed;
+            instance = this;
         }
 
         public void Destroy()
         {
+            instance = null; 
 #if UNITY_2019_1_OR_NEWER
             SceneView.duringSceneGui -=  OnSceneGUI;
 #else
             SceneView.onSceneGUIDelegate -= OnSceneGUI;
 #endif
             Undo.undoRedoPerformed -= UndoRedoPerformed;
+        }
+
+        public List<MotionPath> GetMotionPathList(Transform root)
+        {
+            if (AnimEditor.root == root)
+            {
+                return motionPaths;
+            }
+
+            if (motionPathsPerRoot.ContainsKey(root))
+            {
+                return motionPathsPerRoot[root];
+            }
+            else
+            {
+                var list = new List<MotionPath>();
+                motionPathsPerRoot.Add(root, list);
+                return list;
+            }
         }
 
         private void UndoRedoPerformed()
@@ -53,15 +73,14 @@ namespace ScriptBoy.MotionPathAnimEditor
         private void OnSceneGUI(SceneView sceneView)
         {
             if (!GetAnimationInfo()) return;
-
-            if (Settings.syncTimeRange)
-            {
-                TimeRange.SyncWithCurrentTime();
-            }
-
-
             if (motionPaths == null) return;
             if (motionPaths.Count == 0) return;
+
+            if (TimeRange.clamp = Settings.useTimeRange)
+            {
+                TimeRange.min = animationWindow.minVisibleTime;
+                TimeRange.max = animationWindow.maxVisibleTime;
+            }
 
             BeginEditor();
             DoEditor(sceneView);
@@ -72,24 +91,66 @@ namespace ScriptBoy.MotionPathAnimEditor
         {
             foreach (var motionPath in motionPaths)
             {
-                if (motionPath.active)
-                {
-                    motionPath.FixMissingKeyframes();
-                    motionPath.UpdateHandleCount();
-                }
+                if (motionPath.active) motionPath.UpdateHandleCount();
             }
 
             if (Settings.pathSpace == Space.World)
             {
+                foreach (var motionPath in motionPaths)
+                {
+                    if (motionPath.active)
+                    {
+                        motionPath.FixMissingKeyframes();
+                        motionPath.UpdateHandleCount();
+                    }
+                }
+
+                if (Settings.showTimeTicks || Settings.showTimeLabels)
+                {
+                    if (editMode || !editMode && GUIUtility.hotControl == 0)
+                    {
+                        float defaultTime = animationWindow.time;
+
+                        int motionPathCount = motionPaths.Count;
+
+                        int frameCount = (int)(animationClip.length * animationClip.frameRate);
+                        float frameToTime = 1 / animationClip.frameRate;
+                        float time2Frame = animationClip.frameRate;
+
+                        for (int i = 0; i < motionPathCount; i++)
+                        {
+                            var motionPath = motionPaths[i];
+                            if (motionPath.active) motionPath.StartCachingWorldFramePositions();
+                        }
+
+                        for (int frame = 0; frame <= frameCount; frame++)
+                        {
+                            float time = frame * frameToTime;
+
+                            //if (!TimeRange.Contains(time)) continue;
+
+                            SampleAnimation(time);
+
+                            for (int i = 0; i < motionPathCount; i++)
+                            {
+                                var motionPath = motionPaths[i];
+                                if (motionPath.active) motionPath.CacheWorldFramePosition();
+                            }
+                        }
+
+                        SampleAnimation(defaultTime);
+                    }
+                }
+
+
                 if (editMode || !editMode && GUIUtility.hotControl == 0)
                 {
-
                     float defaultTime = animationWindow.time;
 
                     int motionPathCount = motionPaths.Count;
-
+                    float frameRate = animationClip.frameRate;
                     int frameCount = (int)(animationClip.length * animationClip.frameRate);
-                    float frameToTime = 1 / animationClip.frameRate;
+                    float frameToTime = 1 / frameRate;
                     float time2Frame = animationClip.frameRate;
                     HashSet<int> hotFrames = new HashSet<int>();
 
@@ -98,14 +159,16 @@ namespace ScriptBoy.MotionPathAnimEditor
                         var motionPath = motionPaths[i];
                         if (motionPath.active) motionPath.StartCachingWorldPath(frameCount, time2Frame, hotFrames);
                     }
-                    int skipFrame = frameCount / 60;
+
+                    int skipFrame = (int)(frameCount / frameRate) / 2;
                     if (skipFrame <= 0) skipFrame = 1;
+                    skipFrame = 1;
 
                     for (int frame = 0; frame <= frameCount; frame++)
                     {
                         float time = frame * frameToTime;
 
-                        if (Settings.useTimeRange && !TimeRange.Contains(time)) continue;
+                        if (!TimeRange.Contains(time)) continue;
 
                         if (frame != 0 && frame != frameCount)
                         {
@@ -156,7 +219,7 @@ namespace ScriptBoy.MotionPathAnimEditor
 
         private void SampleAnimation(float time)
         {
-            animationClip.SampleAnimation(rootGameObject, time);
+            animationClip.SampleAnimation(root.gameObject, time);
         }
 
         private void EndEditor()
@@ -169,7 +232,7 @@ namespace ScriptBoy.MotionPathAnimEditor
 
         public void ApplyChages()
         {
-            animationClip.SampleAnimation(rootGameObject, animationWindow.time);
+            animationClip.SampleAnimation(root.gameObject, animationWindow.time);
 
             foreach (var motionPath in motionPaths)
             {
@@ -198,22 +261,41 @@ namespace ScriptBoy.MotionPathAnimEditor
             {
                 foreach (var motionPath in motionPaths)
                 {
-                    if (motionPath.active)
-                    {
-                        motionPath.DrawPath();
-                    }
+                    if (motionPath.active) motionPath.DrawWorldPath();
                 }
             }
             else
             {
                 foreach (var motionPath in motionPaths)
                 {
-                    if (motionPath.active)
-                    {
-                        motionPath.DrawCurves();
-                    }
+                    if (motionPath.active) motionPath.DrawCurves();
                 }
 
+                if (Settings.showTimeTicks || Settings.showTimeLabels)
+                {
+                    foreach (var motionPath in motionPaths)
+                    {
+                        if (motionPath.active) motionPath.CacheLocalFramePositions();
+                    }
+                }
+            }
+
+
+
+            if (Settings.showTimeTicks)
+            {
+                foreach (var motionPath in motionPaths)
+                {
+                    if (motionPath.active) motionPath.DrawTimeTicks();
+                }
+            }
+
+            if (Settings.showTimeLabels)
+            {
+                foreach (var motionPath in motionPaths)
+                {
+                    if (motionPath.active) motionPath.DrawTimeLabels();
+                }
             }
         }
 
@@ -377,35 +459,36 @@ namespace ScriptBoy.MotionPathAnimEditor
 
 
             //Get RootGameObject 
-            var newRootGameObject = animationWindow.rootGameObject;
-            if (newRootGameObject == null)
+            var newRoot = animationWindow.root;
+            if (newRoot == null)
             {
                 AnimEditorWindow.RepaintWindow();
                 return false;
             }
-            if (rootGameObject != newRootGameObject)
+
+            if (root != newRoot)
             {
-                if (rootGameObject != null)
+                if (root != null)
                 {
-                    history.Remove(rootGameObject);
-                    history.Add(rootGameObject, motionPaths.ToArray());
+                    motionPathsPerRoot.Remove(root);
+                    motionPathsPerRoot.Add(root, new List<MotionPath>(motionPaths));
                     motionPaths.Clear();
                 }
 
-                rootGameObject = newRootGameObject;
-                if (rootGameObject != null)
+                root = newRoot;
+                if (root != null)
                 {
-                    rootTransform = rootGameObject.transform;
-                    if (history.ContainsKey(rootGameObject))
+                    if (motionPathsPerRoot.ContainsKey(root))
                     {
-                        motionPaths.AddRange(history[rootGameObject]);
-                        history.Remove(rootGameObject);
+                        motionPaths.AddRange(motionPathsPerRoot[root]);
+                        motionPathsPerRoot.Remove(root);
                     }
                 }
+                else root = null;
                 AnimEditorWindow.RepaintWindow();
             }
 
-            if (rootGameObject == null) return false;
+            if (root == null) return false;
 
             return UpdateMotionPathsCurvesInfo();
         }
@@ -416,7 +499,7 @@ namespace ScriptBoy.MotionPathAnimEditor
 
             foreach (var motionPath in motionPaths) motionPath.ClearAnimationCurves();
 
-            var positionCurveBindings = PositionCurveBindingsCollector.GetList(animationClip, rootTransform);
+            var positionCurveBindings = PositionCurveBindingsCollector.GetList(animationClip, root);
 
             if (!animationWindow.FindAnimationWindowKeyframes(positionCurveBindings)) return false;
 
@@ -432,10 +515,24 @@ namespace ScriptBoy.MotionPathAnimEditor
                 }
             }
 
-            rootMotionPath = motionPaths.Find(m => m.transform == rootTransform);
-
+            rootMotionPath = motionPaths.Find(m => m.transform == root);
             return true;
         }
         #endregion
+    }
+
+
+    static class TimeRange
+    {
+        public static bool clamp;
+        public static float min;
+        public static float max;
+
+        public static bool Contains(float time)
+        {
+            if (clamp) return min <= time && time <= max;
+
+            return true;
+        }
     }
 }

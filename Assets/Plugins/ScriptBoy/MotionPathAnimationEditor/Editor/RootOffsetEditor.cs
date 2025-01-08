@@ -52,7 +52,7 @@ namespace ScriptBoy.MotionPathAnimEditor
                 if (GUILayout.Button("Calculate Offset"))
                 {
                     float time = AnimEditor.animationWindow.time;
-                    Vector3 offset = AnimEditor.rootTransform.position - rootMotionPath.GetPositionAtTime(time);
+                    Vector3 offset = AnimEditor.root.position - rootMotionPath.GetPositionAtTime(time);
                     m_PositionProp.vector3Value = offset;
                 }
             }

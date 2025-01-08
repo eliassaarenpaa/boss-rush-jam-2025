@@ -35,7 +35,8 @@ namespace ScriptBoy.MotionPathAnimEditor
 
         private List<ControlHandle> m_ControlHandles;
 
-        private List<Vector3> m_Path;
+        private List<Vector3> m_Path = new List<Vector3>();
+        private List<Vector3> m_Frames = new List<Vector3>();
         private Dictionary<int, int> m_KeyIndexByFrame;
         private float[] m_KeyTimes;
 
@@ -97,10 +98,10 @@ namespace ScriptBoy.MotionPathAnimEditor
                 }
                 else
                 {
-                    path = AnimationUtility.CalculateTransformPath(m_Transform, AnimEditor.rootTransform);
+                    path = AnimationUtility.CalculateTransformPath(m_Transform, AnimEditor.root);
                 }
 
-                path = AnimEditor.rootGameObject.name + ((path == "") ? "" : "/") + path;
+                path = AnimEditor.root.name + ((path == "") ? "" : "/") + path;
                 return path;
             }
         }
@@ -143,7 +144,7 @@ namespace ScriptBoy.MotionPathAnimEditor
                 var parent = m_Transform.parent;
                 m = parent == null ? Matrix4x4.identity : parent.localToWorldMatrix;
 
-                if (Settings.useRootOffset && transform == AnimEditor.rootTransform)
+                if (Settings.useRootOffset && transform == AnimEditor.root)
                 {
                     m *= RootOffset.matrix;
                 }
@@ -238,7 +239,7 @@ namespace ScriptBoy.MotionPathAnimEditor
                 handlePosition.z = m_HasZAxis ? zKeys[i].value : 0;
 
                 Vector3 inTangents;
-                inTangents.x = m_HasXAxis ? xKeys[i].inTangent : 0; 
+                inTangents.x = m_HasXAxis ? xKeys[i].inTangent : 0;
                 inTangents.y = m_HasYAxis ? yKeys[i].inTangent : 0;
                 inTangents.z = m_HasZAxis ? zKeys[i].inTangent : 0;
 
@@ -283,7 +284,7 @@ namespace ScriptBoy.MotionPathAnimEditor
                 tangentLeft.hide = i == 0;
                 tangentRight.hide = i == keyCount - 1;
                 handle.time = currentTime;
-                handle.hide = Settings.useTimeRange && !TimeRange.Contains(currentTime);
+                handle.hide = !TimeRange.Contains(currentTime);
                 handle.hasChanged = false;
                 tangentLeft.hasChanged = false;
                 tangentRight.hasChanged = false;
@@ -555,7 +556,7 @@ namespace ScriptBoy.MotionPathAnimEditor
             if (m_HasXAxis) xCount = m_XCurve.length;
             if (m_HasYAxis) yCount = m_YCurve.length;
             if (m_HasZAxis) zCount = m_ZCurve.length;
-            
+
             //011
             if (!m_HasXAxis && m_HasYAxis && m_HasZAxis && yCount == zCount) return;
             //101
@@ -614,7 +615,7 @@ namespace ScriptBoy.MotionPathAnimEditor
             if (m_HasYAxis) y = m_YCurve.Evaluate(time);
             if (m_HasZAxis) z = m_ZCurve.Evaluate(time);
 
-            return new Vector3(x,y,z);
+            return new Vector3(x, y, z);
         }
 
         public void StartMagnet()
@@ -780,16 +781,17 @@ namespace ScriptBoy.MotionPathAnimEditor
         }
 
         #region Cache World Path
+        public void StartCachingWorldFramePositions()
+        {
+            m_Frames.Clear();
+            m_FirstVisibleFrameIndex = 0;
+        }
+
+
         public void StartCachingWorldPath(int frameCount, float time2Frame, HashSet<int> hotFrames)
         {
-            if (m_Path == null)
-            {
-                m_Path = new List<Vector3>();
-            }
-            else
-            {
-                m_Path.Clear();
-            }
+
+            m_Path.Clear();
 
             if (m_KeyIndexByFrame == null) m_KeyIndexByFrame = new Dictionary<int, int>();
 
@@ -855,14 +857,191 @@ namespace ScriptBoy.MotionPathAnimEditor
                 m_ControlHandles[keyIndex].SetMatrix(localToWorldMatrix);
             }
         }
+
+        public void CacheWorldFramePosition()
+        {
+            Vector3 po = m_Transform.position;
+            m_Frames.Add(po);
+        }
         #endregion
 
         #region Draw Path/Curve
-        public void DrawPath()
+        public void DrawWorldPath()
         {
             Handles.color = Settings.pathColor;
             Handles.DrawAAPolyLine(4, m_Path.ToArray());
         }
+
+        public void CacheLocalFramePositions()
+        {
+            if (Event.current.type != EventType.Repaint) return;
+
+            m_Frames.Clear();
+
+            if (!HasCurveData) return;
+            int count = m_ControlHandles.Count;
+            if (count < 2) return;
+            float curveAccuracy = Settings.pathAccuracy;
+
+            List<int> visibleHandleIndexes = new List<int>();
+            for (int i = 0; i < count; i++)
+            {
+                if (TimeRange.Contains(m_ControlHandles[i].time)) visibleHandleIndexes.Add(i);
+            }
+
+            if (visibleHandleIndexes.Count < 2) return;
+
+            float frameRate = AnimEditor.animationClip.frameRate;
+            float frameToTime = 1 / frameRate;
+
+
+            int firstVisibleHandleIndex = visibleHandleIndexes[0];
+            int lastVisibleHandleIndex = visibleHandleIndexes[visibleHandleIndexes.Count - 1];
+            float firstVisibleTime = m_ControlHandles[firstVisibleHandleIndex].time;
+            float lastVisibleTime = m_ControlHandles[lastVisibleHandleIndex].time;
+            int firstVisibleFrame = Mathf.RoundToInt(firstVisibleTime * frameRate);
+            int lastVisibleFrame = Mathf.RoundToInt(lastVisibleTime * frameRate);
+
+            float time = firstVisibleTime;
+            int frame = firstVisibleFrame;
+
+            for (int i = firstVisibleHandleIndex; i < lastVisibleHandleIndex; i++)
+            {
+                ControlHandle startHandle = m_ControlHandles[i];
+                ControlHandle endHandle = m_ControlHandles[i + 1];
+
+                Vector3 start = startHandle.position;
+                Vector3 end = endHandle.position;
+
+                Vector3 startTangent = startHandle.rightTangent.position;
+                Vector3 endTangent = endHandle.leftTangent.position;
+
+                if (float.IsInfinity(startTangent.x) || float.IsInfinity(endTangent.x))
+                {
+                    Handles.color = Settings.pathColor;
+                    Handles.DrawDottedLine(start, end, 3f);
+                }
+                else
+                {
+
+                }
+
+                float startTime = startHandle.time;
+                float endTime = endHandle.time;
+
+                while (time >= startTime && time <= endTime)
+                {
+                    float t = Mathf.InverseLerp(startTime, endTime, time);
+                    m_Frames.Add(BezierUtility.EvaluateBezierCurve(start, end, startTangent, endTangent, t));
+                    time += frameToTime;
+                    frame++;
+                }
+            }
+
+            m_FirstVisibleFrameIndex = firstVisibleFrame;
+        }
+
+
+        int m_FirstVisibleFrameIndex;
+
+
+        public void DrawTimeTicks()
+        {
+            if (Event.current.type != EventType.Repaint) return;
+            if (!HasCurveData) return;
+            if (m_Frames.Count == 0) return;
+
+            Quaternion q = Quaternion.identity;
+
+            float frameRate = AnimEditor.animationClip.frameRate;
+            float frameToTime = 1 / frameRate;
+
+            int maxTickLevel = AnimEditor.animationWindow.maxTickLevel;
+            int tickFrameRate0 = AnimEditor.animationWindow.GetTickFrameRate(maxTickLevel);
+            int tickFrameRate1 = AnimEditor.animationWindow.GetTickFrameRate(maxTickLevel - 1);
+            int tickFrameRate2 = AnimEditor.animationWindow.GetTickFrameRate(maxTickLevel - 2);
+            int tickFrameRate3 = AnimEditor.animationWindow.GetTickFrameRate(maxTickLevel - 3);
+
+            int frameCount = m_Frames.Count;
+
+            Color color = Settings.timeTicksColor;
+            float alpha = color.a;
+            float alphaMul = 1;
+
+            for (int i = 0; i < frameCount; i++)
+            {
+                int frame = m_FirstVisibleFrameIndex + i;
+                float time = frame * frameToTime;
+
+                if (!TimeRange.Contains(time)) continue;
+
+                float size;
+                if (frame % tickFrameRate0 == 0)
+                {
+                    alphaMul = 1;
+                    size = 0.075f;
+                }
+                else if (frame % tickFrameRate1 == 0)
+                {
+                    alphaMul = 0.8f;
+                    size = 0.05f;
+                }
+                else if (frame % tickFrameRate2 == 0)
+                {
+                    alphaMul = 0.4f;
+                    size = 0.05f;
+                }
+                else if (frame % tickFrameRate3 == 0)
+                {
+                    alphaMul = 0.2f;
+                    size = 0.05f;
+                }
+                else
+                {
+                    continue;
+                }
+
+                Vector3 position = m_Frames[i];
+                size *= HandleUtility.GetHandleSize(position);
+                color.a = alpha * alphaMul;
+                Handles.color = color;
+                Handles.SphereHandleCap(-100, position, q, size, EventType.Repaint);
+            }
+        }
+
+        static GUIStyle s_TimeLabelStyle = new GUIStyle(GUI.skin.label);
+
+        public void DrawTimeLabels()
+        {
+            if (Event.current.type != EventType.Repaint) return;
+            if (m_Frames.Count == 0) return;
+            if (!HasCurveData) return;
+
+            s_TimeLabelStyle.normal.textColor = Settings.timeLabelsColor;
+            s_TimeLabelStyle.fontStyle = FontStyle.Bold;
+
+            float frameRate = AnimEditor.animationClip.frameRate;
+            float frameToTime = 1 / frameRate;
+
+            int maxTickLevel = AnimEditor.animationWindow.maxTickLevel;
+            int tickFrameRate = AnimEditor.animationWindow.GetTickFrameRate(maxTickLevel);
+
+            int frameCount = m_Frames.Count;
+            for (int i = 0; i < frameCount; i++)
+            {
+                int frame = m_FirstVisibleFrameIndex + i;
+                if (frame % tickFrameRate == 0)
+                {
+                    float time = frame * frameToTime;
+
+                    if (!TimeRange.Contains(time)) continue;
+
+                    string label = AnimEditor.animationWindow.FormatTickTime(time);
+                    Handles.Label(m_Frames[i], label, s_TimeLabelStyle);
+                }
+            }
+        }
+
 
         public void DrawCurves()
         {
@@ -883,7 +1062,7 @@ namespace ScriptBoy.MotionPathAnimEditor
                 ControlHandle endHandle = m_ControlHandles[i];
 
 
-                if (startHandle.hide || (endHandle.hide && i != count - 1 || Settings.useTimeRange && !TimeRange.Contains(endHandle.time))) continue;
+                if (startHandle.hide || (endHandle.hide && i != count - 1 || !TimeRange.Contains(endHandle.time))) continue;
 
 
                 Vector3 start = startHandle.position;
@@ -1109,6 +1288,40 @@ namespace ScriptBoy.MotionPathAnimEditor
 
     static class BezierUtility
     {
+
+        /// <summary>
+        /// Evaluate the curve at time.
+        /// </summary>
+        public static Vector3 EvaluateBezierCurve(Vector3 start, Vector3 end, Vector3 startTangent, Vector3 endTangent, float t)
+        {
+            float x0 = start.x;
+            float y0 = start.y;
+            float z0 = start.z;
+
+            float x1 = end.x;
+            float y1 = end.y;
+            float z1 = end.z;
+
+            float x2 = startTangent.x;
+            float y2 = startTangent.y;
+            float z2 = startTangent.z;
+
+            float x3 = endTangent.x;
+            float y3 = endTangent.y;
+            float z3 = endTangent.z;
+
+            float t3 = 3 * t;
+            float tt3 = 3 * t * t;
+            float ttt = t * t * t;
+
+            Vector3 v;
+            v.x = ttt * (x1 - x0 + 3 * (x2 - x3)) + tt3 * (x0 + x3 - 2 * x2) + t3 * (x2 - x0) + x0;
+            v.y = ttt * (y1 - y0 + 3 * (y2 - y3)) + tt3 * (y0 + y3 - 2 * y2) + t3 * (y2 - y0) + y0;
+            v.z = ttt * (z1 - z0 + 3 * (z2 - z3)) + tt3 * (z0 + z3 - 2 * z2) + t3 * (z2 - z0) + z0;
+            return v;
+        }
+
+
         public static float GetLength(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
         {
             int n = 20;

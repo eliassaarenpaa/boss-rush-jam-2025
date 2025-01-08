@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 92ce48bc9526d1c4badfcab2ed0a20d6
+guid: 19c8ec464b8448d44bfd3cc3512b5aef
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -14,5 +14,5 @@ AssetOrigin:
   productId: 241255
   packageName: Motion Path Animation Editor
   packageVersion: 2.6.0
-  assetPath: Assets/Plugins/ScriptBoy/MotionPathAnimationEditor/Editor/ScriptableSingleton.cs
+  assetPath: Assets/Plugins/ScriptBoy/MotionPathAnimationEditor/Editor/MotionPathUtility.cs
   uploadId: 721946

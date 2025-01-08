@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +21,10 @@ namespace ScriptBoy.MotionPathAnimEditor
                 {
                     return (T)(object)EditorPrefs.GetFloat(key);
                 }
+                else if (t == typeof(int))
+                {
+                    return (T)(object)EditorPrefs.GetInt(key);
+                }
 
                 return JsonUtility.FromJson<T>(EditorPrefs.GetString(key));
             }
@@ -36,6 +41,10 @@ namespace ScriptBoy.MotionPathAnimEditor
                 {
                     EditorPrefs.SetFloat(key, (float)(object)value);
                 }
+                else if (value is int)
+                {
+                    EditorPrefs.SetInt(key, (int)(object)value);
+                }
                 else
                 {
                     EditorPrefs.SetString(key, JsonUtility.ToJson(value));
@@ -43,9 +52,30 @@ namespace ScriptBoy.MotionPathAnimEditor
             }
         }
 
-        class UserSetting<T>
+        abstract class BaseUserSetting
         {
-            public UserSetting(string key, T defaultValue)
+            static List<BaseUserSetting> s_Instances { get; } = new List<BaseUserSetting>();
+
+            public BaseUserSetting()
+            {
+                s_Instances.Add(this);
+            }
+
+            public abstract void Reset();
+
+            public static void ResetAll()
+            {
+                foreach (var setting in s_Instances)
+                {
+                    setting.Reset();
+                }
+            }
+        }
+
+        class UserSetting<T> : BaseUserSetting
+        {
+
+            public UserSetting(string key, T defaultValue) : base()
             {
                 m_Key = key;
                 m_Value = m_Default = defaultValue;
@@ -69,7 +99,7 @@ namespace ScriptBoy.MotionPathAnimEditor
                 }
             }
 
-            public void Reset()
+            public override void Reset()
             {
                 m_Value = m_Default;
                 Save();
@@ -104,6 +134,14 @@ namespace ScriptBoy.MotionPathAnimEditor
             public readonly static GUIContent pathGradient = new GUIContent("Gradient");
             public readonly static GUIContent showPathFullName = new GUIContent("Show Full Name", "Show the motion path full name in the MotionPath list.");
             public readonly static GUIContent showPathEditButton = new GUIContent("Show EditPath Button", "Show the EditPath button in the MotionPath list.\nIf you turn this off, all paths will be editable only based on the EditMode button.");
+            public readonly static GUIContent showTimeTicks = new GUIContent("Show Time Ticks", "Show time ticks");
+            public readonly static GUIContent showTimeLabels = new GUIContent("Show Time Labels", "Show the motion path full name in the MotionPath list.");
+            public readonly static GUIContent timeTicksColor = new GUIContent("", "Show time ticks");
+            public readonly static GUIContent timeLabelsColor = new GUIContent("", "Show the motion path full name in the MotionPath list.");
+
+            static UserSetting<bool> s_ShowTimeTicks = new UserSetting<bool>(Keys.ShowTimeTicks, Defaults.ShowTimeTicks);
+            static UserSetting<bool> s_ShowTimeLabels = new UserSetting<bool>(Keys.ShowTimeLabels, Defaults.ShowTimeLabels);
+
 
             public readonly static GUIContent syncSelection = new GUIContent("Sync Selection", "Synchronize handle selection with keyframe selection.");
 
@@ -111,7 +149,6 @@ namespace ScriptBoy.MotionPathAnimEditor
             public readonly static GUIContent useRootOffset = new GUIContent("Use Root Offset", "You can manually apply a custom offset to the path of the root object.");
             public readonly static GUIContent useHideHandles = new GUIContent("Use Hide Handles", "This feature allows you to hide controls or tangents.");
             public readonly static GUIContent useTimeRange = new GUIContent("Use Time Range", "This feature allows you to hide all handles and paths outside of a time range. It is useful when you are working on a long animation clip.");
-            public readonly static GUIContent syncTimeRange = new GUIContent("Sync Time Range", "Synchronize the center of the Time Range with the Animation Window's current time.");
             public readonly static GUIContent useMagnet = new GUIContent("Use Magnet", "This feature allows you to smoothly drag neighboring handles of selected handles.");
 
 
@@ -135,7 +172,6 @@ namespace ScriptBoy.MotionPathAnimEditor
             public const bool UseRootOffset = false;
             public const bool UseHideHandles = false;
             public const bool UseTimeRange = false;
-            public const bool SyncTimeRange = false;
             public const bool UseMagnet = false;
 
             public const ColorMode PathColorMode = ColorMode.Color;
@@ -145,6 +181,11 @@ namespace ScriptBoy.MotionPathAnimEditor
             public const int PathAccuracy = 30;
             public const bool ShowPathFullName = false;
             public const bool ShowPathEditButton = true;
+            public const bool ShowTimeTicks = false;
+            public const bool ShowTimeLabels = false;
+
+            public static readonly Color timeTicksColor = Color.green;
+            public static readonly Color timeLabelsColor = Color.green;
 
             public static readonly Color WindowColor;
 
@@ -169,7 +210,6 @@ namespace ScriptBoy.MotionPathAnimEditor
             public const string UseRootOffset = "MotionPathAnimEditor.Settings.UseRootOffset";
             public const string UseHideHandles = "MotionPathAnimEditor.Settings.UseHideHandles";
             public const string UseTimeRange = "MotionPathAnimEditor.Settings.UseTimeRange";
-            public const string SyncTimeRange = "MotionPathAnimEditor.Settings.SyncTimeRange";
             public const string UseMagnet = "MotionPathAnimEditor.Settings.UseMagnet";
 
             public const string PathColorMode = "MotionPathAnimEditor.Settings.PathColorMode";
@@ -179,10 +219,13 @@ namespace ScriptBoy.MotionPathAnimEditor
             public const string PathSpace = "MotionPathAnimEditor.Settings.PathSpace";
             public const string ShowPathFullName = "MotionPathAnimEditor.Settings.PathFullName";
             public const string ShowPathEditButton = "MotionPathAnimEditor.Settings.PathEditButton";
+            public const string ShowTimeTicks = "MotionPathAnimEditor.Settings.ShowTimeTicks";
+            public const string TimeTicksColor = "MotionPathAnimEditor.Settings.TimeTicksColor";
+            public const string ShowTimeLabels = "MotionPathAnimEditor.Settings.ShowTimeLabels";
+            public const string TimeLabelsColor = "MotionPathAnimEditor.Settings.TimeLabelsColor";
 
             public const string WindowColor = "MotionPathAnimEditor.Settings.WindowColor";
         }
-
 
         static UserSetting<float> s_HandleSize = new UserSetting<float>(Keys.HandleSize, Defaults.HandleSize);
         static UserSetting<HandleCapShape> s_HandleCapControl = new UserSetting<HandleCapShape>(Keys.HandleCapControl, Defaults.HandleCapControl);
@@ -195,7 +238,6 @@ namespace ScriptBoy.MotionPathAnimEditor
         static UserSetting<bool> s_UseRootOffset = new UserSetting<bool>(Keys.UseRootOffset, Defaults.UseRootOffset);
         static UserSetting<bool> s_UseHideHandles = new UserSetting<bool>(Keys.UseHideHandles, Defaults.UseHideHandles);
         static UserSetting<bool> s_UseTimeRange = new UserSetting<bool>(Keys.UseTimeRange, Defaults.UseTimeRange);
-        static UserSetting<bool> s_SyncTimeRange = new UserSetting<bool>(Keys.SyncTimeRange, Defaults.SyncTimeRange);
         static UserSetting<bool> s_UseMagnet = new UserSetting<bool>(Keys.UseMagnet, Defaults.UseMagnet);
 
         static UserSetting<Space> s_PathSpace = new UserSetting<Space>(Keys.PathSpace, Defaults.PathSpace);
@@ -205,8 +247,15 @@ namespace ScriptBoy.MotionPathAnimEditor
         static UserSetting<MinMaxGradient> s_PathGradient = new UserSetting<MinMaxGradient>(Keys.PathGradient, Defaults.PathGradient);
         static UserSetting<bool> s_ShowPathFullName = new UserSetting<bool>(Keys.ShowPathFullName, Defaults.ShowPathFullName);
         static UserSetting<bool> s_ShowPathEditButton = new UserSetting<bool>(Keys.ShowPathEditButton, Defaults.ShowPathEditButton);
+        static UserSetting<bool> s_ShowTimeTicks = new UserSetting<bool>(Keys.ShowTimeTicks, Defaults.ShowTimeTicks);
+        static UserSetting<bool> s_ShowTimeLabels = new UserSetting<bool>(Keys.ShowTimeLabels, Defaults.ShowTimeLabels);
+        static UserSetting<Color> s_TimeTicksColor = new UserSetting<Color>(Keys.TimeTicksColor, Defaults.timeTicksColor);
+        static UserSetting<Color> s_TimeLabelsColor = new UserSetting<Color>(Keys.TimeLabelsColor, Defaults.timeLabelsColor);
+
 
         static UserSetting<Color> s_WindowColor = new UserSetting<Color>(Keys.WindowColor, Defaults.WindowColor);
+
+
 
         public static float handleSize { get => s_HandleSize.Value; private set => s_HandleSize.Value = value; }
         public static HandleCapShape handleCapControl { get => s_HandleCapControl.Value; private set => s_HandleCapControl.Value = value; }
@@ -220,7 +269,6 @@ namespace ScriptBoy.MotionPathAnimEditor
         public static bool useRootOffset { get => s_UseRootOffset.Value; private set => s_UseRootOffset.Value = value; }
         public static bool useHideHandles { get => s_UseHideHandles.Value; private set => s_UseHideHandles.Value = value; }
         public static bool useTimeRange { get => s_UseTimeRange.Value; private set => s_UseTimeRange.Value = value; }
-        public static bool syncTimeRange { get => s_SyncTimeRange.Value; private set => s_SyncTimeRange.Value = value; }
         public static bool useMagnet { get => s_UseMagnet.Value; private set => s_UseMagnet.Value = value; }
 
         public static Space pathSpace { get => s_PathSpace.Value; private set => s_PathSpace.Value = value; }
@@ -231,7 +279,15 @@ namespace ScriptBoy.MotionPathAnimEditor
         public static bool showPathFullName { get => s_ShowPathFullName.Value; private set => s_ShowPathFullName.Value = value; }
         public static bool showPathEditButton { get => s_ShowPathEditButton.Value; private set => s_ShowPathEditButton.Value = value; }
 
+        public static bool showTimeTicks { get => s_ShowTimeTicks.Value; private set => s_ShowTimeTicks.Value = value; }
+        public static bool showTimeLabels { get => s_ShowTimeLabels.Value; private set => s_ShowTimeLabels.Value = value; }
+
+        public static Color timeTicksColor { get => s_TimeTicksColor.Value; private set => s_TimeTicksColor.Value = value; }
+        public static Color timeLabelsColor { get => s_TimeLabelsColor.Value; private set => s_TimeLabelsColor.Value = value; }
+
         public static Color windowColor { get => s_WindowColor.Value; private set => s_WindowColor.Value = value; }
+
+
 
         [SettingsProvider]
         static SettingsProvider CreateSettingsProvider()
@@ -257,10 +313,6 @@ namespace ScriptBoy.MotionPathAnimEditor
                 useHideHandles = EditorGUILayout.ToggleLeft(GUIContents.useHideHandles, useHideHandles);
                 useMagnet = EditorGUILayout.ToggleLeft(GUIContents.useMagnet, useMagnet);
                 useTimeRange = EditorGUILayout.ToggleLeft(GUIContents.useTimeRange, useTimeRange);
-                if (useTimeRange)
-                {
-                    syncTimeRange = EditorGUILayout.ToggleLeft(GUIContents.syncTimeRange, syncTimeRange);
-                }
             }
 
             using (new CustomGUILayout.GroupScope("Path"))
@@ -283,6 +335,25 @@ namespace ScriptBoy.MotionPathAnimEditor
 
                 showPathFullName = EditorGUILayout.ToggleLeft(GUIContents.showPathFullName, showPathFullName);
                 showPathEditButton = EditorGUILayout.ToggleLeft(GUIContents.showPathEditButton, showPathEditButton);
+
+                EditorGUILayout.BeginHorizontal();
+                showTimeTicks = EditorGUILayout.ToggleLeft(GUIContents.showTimeTicks, showTimeTicks);
+                if (showTimeTicks)
+                {
+                    timeTicksColor = EditorGUILayout.ColorField(GUIContents.timeTicksColor, timeTicksColor);
+                }
+                EditorGUILayout.EndHorizontal();
+
+
+                EditorGUILayout.BeginHorizontal();
+                showTimeLabels = EditorGUILayout.ToggleLeft(GUIContents.showTimeLabels, showTimeLabels);
+                if (showTimeLabels)
+                {
+                    timeLabelsColor = EditorGUILayout.ColorField(GUIContents.timeLabelsColor, timeLabelsColor);
+                }
+                EditorGUILayout.EndHorizontal();
+
+
                 useRootOffset = EditorGUILayout.ToggleLeft(GUIContents.useRootOffset, useRootOffset);
             }
 
@@ -327,27 +398,7 @@ namespace ScriptBoy.MotionPathAnimEditor
 
         static void Reset()
         {
-            s_HandleSize.Reset();
-            s_HandleCapControl.Reset();
-            s_HandleCapTangent.Reset();
-            s_HandleColorNormal.Reset();
-            s_HandleColorSelected.Reset();
-            s_SyncSelection.Reset();
-            s_UseLocalSnappingIn2D.Reset();
-            s_UseRootOffset.Reset();
-            s_UseHideHandles.Reset();
-            s_UseTimeRange.Reset();
-            s_UseMagnet.Reset();
-            s_SyncTimeRange.Reset();
-            s_PathAccuracy.Reset();
-            s_PathColorMode.Reset();
-            s_PathColor.Reset();
-            s_PathGradient.Reset();
-            s_PathSpace.Reset(); ;
-            s_ShowPathFullName.Reset();
-            s_ShowPathEditButton.Reset();
-            s_WindowColor.Reset();
-
+            BaseUserSetting.ResetAll();
             Refresh();
         }
     }

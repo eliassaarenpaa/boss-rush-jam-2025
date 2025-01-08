@@ -2,12 +2,12 @@
 using System.Linq;
 using UnityEditor;
 using UnityEditorInternal;
-using UnityEngine;
 
 namespace FullscreenEditor {
     /// <summary>Helper class for enabling/disabling compilation symbols.</summary>
     public static class Integration {
 
+        [Obsolete("Obsolete")]
         private static string[] GetAllDefines() {
             var currentBuildTarget = EditorUserBuildSettings.selectedBuildTargetGroup;
             var scriptDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(currentBuildTarget);
@@ -16,6 +16,7 @@ namespace FullscreenEditor {
             return split;
         }
 
+        [Obsolete("Obsolete")]
         private static void SetAllDefines(string[] value) {
             var currentBuildTarget = EditorUserBuildSettings.selectedBuildTargetGroup;
             var currentScriptDefines = PlayerSettings.GetScriptingDefineSymbolsForGroup(currentBuildTarget);
@@ -45,6 +46,7 @@ namespace FullscreenEditor {
 
         /// <summary>Toggle a given define symbol.</summary>
         /// <param name="directive">The define symbol to toggle.</param>
+        [Obsolete("Obsolete")]
         public static void ToggleDirectiveDefined(string directive) {
             var defined = IsDirectiveDefined(directive);
             SetDirectiveDefined(directive, !defined);
@@ -53,6 +55,7 @@ namespace FullscreenEditor {
         /// <summary>Enable or disable a given define symbol.</summary>
         /// <param name="directive">The define symbol to set.</param>
         /// <param name="enabled">Wheter to enable or disable this directive.</param>
+        [Obsolete("Obsolete")]
         public static void SetDirectiveDefined(string directive, bool enabled) {
             if (IsDirectiveDefined(directive) == enabled)
                 return; // Flag already enabled/disabled
@@ -73,6 +76,7 @@ namespace FullscreenEditor {
 
         /// <summary>Get wheter the given directive is enabled or not.</summary>
         /// <param name="directive">The name of the define symbol to check.</param> 
+        [Obsolete("Obsolete")]
         public static bool IsDirectiveDefined(string directive) {
             return GetAllDefines().Any(d => d == directive);
         }

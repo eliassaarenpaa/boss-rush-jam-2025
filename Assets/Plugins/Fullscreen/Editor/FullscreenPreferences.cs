@@ -147,6 +147,7 @@ namespace FullscreenEditor {
 
 #if UNITY_2018_3_OR_NEWER
         [SettingsProvider]
+        [Obsolete("Obsolete")]
         private static SettingsProvider RetrieveSettingsProvider() {
             var sp = new SettingsProvider("Preferences/Fullscreen Editor", SettingsScope.User, contents.Select(c => c.text));
             sp.footerBarGuiHandler = OnFooterGUI;
@@ -158,6 +159,7 @@ namespace FullscreenEditor {
         }
 
         [SettingsProvider]
+        [Obsolete("Obsolete")]
         private static SettingsProvider RetrieveSettingsProviderShortcuts() {
             var sp = new SettingsProvider("Preferences/Fullscreen Editor/Shortcuts", SettingsScope.User, contents.Select(c => c.text));
             sp.footerBarGuiHandler = OnFooterGUI;
@@ -259,6 +261,7 @@ namespace FullscreenEditor {
             }
         }
 
+        [Obsolete("Obsolete")]
         private static void OnFooterGUI() {
 
             Func<GUIContent, bool> linkLabel = (label) =>

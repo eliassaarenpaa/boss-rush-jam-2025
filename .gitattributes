@@ -1,1 +1,2 @@
-*.bundle text eol=lf #Should fix FMOD issue where on git pull git breaks some .bundle files. https://qa.fmod.com/t/incorrect-line-endings-in-fmod-plugin-bundles/18791
+#Should fix FMOD issue where on git pull git breaks some .bundle files: https://qa.fmod.com/t/incorrect-line-endings-in-fmod-plugin-bundles/18791
+*.bundle text eol=lf

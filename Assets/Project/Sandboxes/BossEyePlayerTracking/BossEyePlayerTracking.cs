@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Project.Runtime.Gameplay.Bosses.Shared
+namespace Project.Sandboxes.BossEyePlayerTracking
 {
     public class BossEyePlayerTracking : MonoBehaviour
     {

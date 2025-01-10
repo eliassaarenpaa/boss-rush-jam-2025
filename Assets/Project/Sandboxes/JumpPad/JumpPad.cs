@@ -31,7 +31,7 @@ public class JumpPad : MonoBehaviour
         {
             _bufferedColliders.Add(other, Time.time); // Add to buffer, so we don't apply force multiple times
 
-            rb.AddForce(transform.up * (Mathf.Abs(rb.velocity.y) + force), ForceMode.Impulse);
+            rb.AddForce(transform.up * (Mathf.Abs(rb.linearVelocity.y) + force), ForceMode.Impulse);
         }
     }
 }

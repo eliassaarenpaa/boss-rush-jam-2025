@@ -16,6 +16,7 @@ MonoBehaviour:
     LoadedProjectGUID:
       valueInternal: 
     RecentlyOpenedProjectPath:
-      valueInternal: Assets\Project\Runtime\Gameplay\Player\Model
+      valueInternal: Assets\Project\Runtime\Gameplay\Bosses\Asmodeus\Animations
     RecentlyOpenedProjectGUIDsList:
+    - valueInternal: 3bc25c26a46ca0e4b97c522560b347c3
     - valueInternal: 58358cfb5dfd86f4483117ed31ff3e73

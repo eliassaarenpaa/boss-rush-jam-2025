@@ -59,7 +59,11 @@ namespace Project.Runtime.Gameplay.Player.Controller
             var velocityDifference = targetVelocity - Rigidbody.linearVelocity;
             var movement = CalculateMovement(velocityDifference, accelRate);
 
-            var slopeMultiplier = CalculateSlopeMultiplier(movement);
+            var slopeMultiplier = 1f;
+            if (!GroundCheck.IsGrounded) //When not grounded or on a non ground surface we use the slope multiplier. 
+            {
+                slopeMultiplier = CalculateSlopeMultiplier(movement);
+            }
 
             Rigidbody.AddForce(movement * slopeMultiplier, ForceMode.Acceleration);
         }

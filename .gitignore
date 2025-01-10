@@ -77,3 +77,5 @@ fmod_editor.log
 *.log
 
 Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
+
+ProjectSettings/Packages/com.unity.probuilder/Settings.json

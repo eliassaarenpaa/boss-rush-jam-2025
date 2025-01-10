@@ -82,3 +82,5 @@ ProjectSettings/Packages/com.unity.probuilder/Settings.json
 Assets/Plugins/UMotionEditor/Plugins/MacOS/Editor/x64/UMotionFBX_Mac_x64.bundle
 
 .idea/.idea.boss-rush-jam-2025/.idea/inspectionProfiles/Project_Default.xml
+
+Assets/Project/Runtime/Gameplay/Bosses/Asmodeus/Model/Asmodeus.spp.painter_lock.meta

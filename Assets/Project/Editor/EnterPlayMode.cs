@@ -10,13 +10,24 @@ namespace Project.Editor
         private static void ToggleNormalBoot()
         {
             Bootstrapper.config.isNormalBoot = true;
-            EditorApplication.isPlaying = !Application.isPlaying;
+            ToggleBoot();
         }
         
         [MenuItem("Enter Play Mode/Debug Boot #w")]
         private static void ToggleDebugBoot()
         {
             Bootstrapper.config.isNormalBoot = false;
+            ToggleBoot();
+        }
+
+        private static void ToggleBoot()
+        {
+            // Dont enter play mode if the scene view is focused
+            if (EditorWindow.focusedWindow == SceneView.lastActiveSceneView)
+            {
+                return;
+            }
+            
             EditorApplication.isPlaying = !Application.isPlaying;
         }
     }

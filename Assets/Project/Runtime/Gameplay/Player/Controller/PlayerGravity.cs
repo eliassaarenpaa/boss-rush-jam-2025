@@ -22,39 +22,23 @@ namespace Project.Runtime.Gameplay.Player.Controller
 
         private void FixedUpdate()
         {
-            var isSlideOnNonSteepSurface = IsSlideOnNonSteepSurface();
 
             var x = Mathf.InverseLerp(0, maxGravityMagnitude, _force.magnitude);
-            var y = gravityAccelCurve.Evaluate(x) * (!isSlideOnNonSteepSurface ? inAirAccelCurveMultiplier : slopeAccelCurveMultiplier);
+            var y = gravityAccelCurve.Evaluate(x) * inAirAccelCurveMultiplier;
 
-            _acceleration += Time.fixedDeltaTime * (!isSlideOnNonSteepSurface ? gravityAccelSpeed : slopeSlideAccelSpeed) * y;
+            _acceleration += Time.fixedDeltaTime * gravityAccelSpeed * y;
             _force += Vector3.down * _acceleration;
             _force = Vector3.ClampMagnitude(_force, maxGravityMagnitude);
 
-            if (!GroundCheck.IsGrounded || GroundIsSlope() || isSlideOnNonSteepSurface)
+            if (!GroundCheck.IsGrounded)
             {
                 Rigidbody.AddForce(_force);
             }
 
-            if (GroundCheck.IsGrounded && !IsSlideOnNonSteepSurface())
+            if (GroundCheck.IsGrounded)
             {
                 SetAcceleration(0);
             }
-        }
-
-        private bool GroundIsSlope()
-        {
-            if (!GroundCheck.IsGrounded) return false;
-            var groundNormalAngle = Vector3.Angle(GroundCheck.GroundNormal, Vector3.up);
-            return groundNormalAngle >= slopeAngle;
-        }
-
-        private bool IsSlideOnNonSteepSurface()
-        {
-            if (GroundCheck.GroundNormal == Vector3.up) return false;
-
-            var isSlidingOnSlope = GroundCheck.IsGrounded && !GroundIsSlope() && PlayerInput.Crouching;
-            return isSlidingOnSlope;
         }
 
         public void SetAcceleration(float value)

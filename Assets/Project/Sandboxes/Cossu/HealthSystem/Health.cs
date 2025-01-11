@@ -6,32 +6,14 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     #region Events
-    public delegate void OnKillEvent();
-    public OnKillEvent onKill;
+    public delegate void OnCurrentHealthChangedEvent(float newCurrentHealth, CurrentHealthChangeType typeOfChange);
+    public OnCurrentHealthChangedEvent onCurrentHealthChanged;
 
-    public delegate void OnDamageTakenEvent(float amount);
-    public OnDamageTakenEvent onDamageTaken;
+    public delegate void OnMaxHealthChangedEvent(float newMaxHealth, MaxHealthChangeType typeOfChange);
+    public OnMaxHealthChangedEvent onMaxHealthChanged;
 
-    public delegate void OnHealedEvent(float amount);
-    public OnHealedEvent onHealed;
-
-    public delegate void OnCurrentHealthDecreasedEvent(float amount);
-    public OnCurrentHealthDecreasedEvent onCurrentHealthDecreased;
-
-    public delegate void OnCurrentHealthAddedEvent(float amount);
-    public OnCurrentHealthAddedEvent onCurrentHealthAdded;
-
-    public delegate void OnCurrentHealthSetEvent(float newCurrentHealth);
-    public OnCurrentHealthSetEvent onCurrentHealthSet;
-
-    public delegate void OnMaxHealthDecreasedEvent(float amount);
-    public OnMaxHealthDecreasedEvent onMaxHealthDecreased;
-
-    public delegate void OnMaxHealthAddedEvent(float amount);
-    public OnMaxHealthAddedEvent onMaxHealthAdded;
-
-    public delegate void OnMaxHealthSetEvent(float newMaxHealth);
-    public OnMaxHealthSetEvent onMaxHealthSet;
+    public delegate void OnKill();
+    public OnKill onKill;
     #endregion
 
     //Health values
@@ -40,91 +22,65 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
-        currentHealth = maxHealth;
+        ChangeCurrentHealth(maxHealth, CurrentHealthChangeType.Set);
     }
 
-    #region Current Health Functions
+    public enum CurrentHealthChangeType { Add, Decrease, Set, Damage, Heal }
     public float GetCurrentHealth() { return currentHealth; }
-
-    public void AddHealth(float amount)
+    public void ChangeCurrentHealth(float value, CurrentHealthChangeType type)
     {
-        currentHealth += Mathf.Abs(amount);
-        onCurrentHealthAdded?.Invoke(amount);
-        if (currentHealth >= maxHealth) currentHealth = maxHealth;
-    }
-
-    public void DecreaseHealth(float amount)
-    {
-        currentHealth -= Mathf.Abs(amount);
-        onCurrentHealthDecreased?.Invoke(amount);
-        if (currentHealth <= 0)
+        switch (type)
         {
-            Kill();
-            return;
+            case CurrentHealthChangeType.Add:
+                currentHealth += Mathf.Abs(value);
+                break;
+            case CurrentHealthChangeType.Decrease:
+                currentHealth -= Mathf.Abs(value);
+                break;
+            case CurrentHealthChangeType.Set:
+                currentHealth = Mathf.Abs(value);
+                break;
+            case CurrentHealthChangeType.Damage:
+                currentHealth -= Mathf.Abs(value);
+                break;
+            case CurrentHealthChangeType.Heal:
+                currentHealth += Mathf.Abs(value);
+                break;
         }
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); //Clamp the health so it doesn't go over max
+        if (currentHealth <= 0) Kill(); //If zero -> Kill
+
+        onCurrentHealthChanged(currentHealth, type);
     }
 
-    public void SetHealth(float newHealth)
+    public enum MaxHealthChangeType { Add, Decrease, Set}
+    public float GetMaxHealth() {  return maxHealth; }
+    public void ChangeMaxHealth(float value, MaxHealthChangeType type)
     {
-        if (newHealth <= 0)
+        switch(type)
         {
-            Kill();
-            return;
+            case MaxHealthChangeType.Add:
+                maxHealth += Mathf.Abs(value);
+                break;
+            case MaxHealthChangeType.Decrease:
+                maxHealth -= Mathf.Abs(value);
+                break;
+            case MaxHealthChangeType.Set:
+                maxHealth = Mathf.Abs(value);
+                break;
         }
-        currentHealth = Mathf.Clamp(newHealth, 0, maxHealth);
-        onCurrentHealthSet?.Invoke(currentHealth);
-    }
-    #endregion
-
-    #region Max Health Modify Functions
-    public float MaxHealth() { return maxHealth; }
-
-    public void AddMaxHealth(float amount)
-    {
-        maxHealth += Mathf.Abs(amount);
-        onMaxHealthAdded?.Invoke(amount);
-    }
-
-    public void DecreaseMaxHealth(float amount)
-    {
-        maxHealth -= Mathf.Abs(amount);
-        onMaxHealthDecreased?.Invoke(amount);
-        if(maxHealth <= 0)
+        maxHealth = Mathf.Clamp(maxHealth, 0, Mathf.Infinity); //Clamp so it does not go below 0
+        if(currentHealth > maxHealth)
         {
-            Kill();
-            return;
+            ChangeCurrentHealth(maxHealth, CurrentHealthChangeType.Set);
         }
-        if(currentHealth >= maxHealth) currentHealth = maxHealth;
-    }
+        if (maxHealth <= 0) Kill();
 
-    public void SetMaxHealth(float newMaxHealth)
-    {
-        if(newMaxHealth <= 0)
-        {
-            Kill();
-            return;
-        }
-        maxHealth = newMaxHealth;
-        if (currentHealth >= maxHealth) currentHealth = maxHealth;
-    }
-    #endregion
-
-    #region Combat functions
-    public void Damage(float amount)
-    {
-        DecreaseHealth(amount);
-        onDamageTaken?.Invoke(amount);
-    }
-
-    public void Heal(float amount)
-    {
-        AddHealth(amount);
-        onHealed?.Invoke(amount);
+        onMaxHealthChanged(maxHealth, type);
     }
 
     public void Kill()
     {
-        onKill.Invoke();
+        onKill?.Invoke();
     }
-    #endregion
 }

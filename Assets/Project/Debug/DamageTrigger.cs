@@ -15,7 +15,7 @@ public class DamageTrigger : MonoBehaviour
     {
         if(other.gameObject.TryGetComponent<Health>(out Health health))
         {
-            health.Damage(damageAmount);
+            health.ChangeCurrentHealth(damageAmount, Health.CurrentHealthChangeType.Damage);
         }
     }
 }

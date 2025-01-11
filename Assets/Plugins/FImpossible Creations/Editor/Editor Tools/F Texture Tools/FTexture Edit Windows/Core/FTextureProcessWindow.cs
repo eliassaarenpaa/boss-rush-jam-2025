@@ -71,7 +71,7 @@ namespace FIMSpace.FTextureTools
         void Reset()
         {
             called = false;
-            position = new Rect(position.x, position.y, 600, position.height);
+            position = new Rect(position.x, position.y, Mathf.Clamp(position.width, 400, 1200), position.height);
         }
 
         Vector2 scrollPos = Vector2.zero;

@@ -29,8 +29,9 @@ namespace FIMSpace.FTextureTools
         {
             FSeamlessWindow window = (FSeamlessWindow)GetWindow(typeof(FSeamlessWindow));
             window.titleContent = new GUIContent("Seamless Generator", FTextureToolsGUIUtilities.FindIcon("SPR_SeamlessGenSmall"), "Stamp sides of the texture to make it tile");
-            
-            window.position = new Rect(200, 100, 600, 800);
+
+            window.previewSize = 100;
+            window.position = new Rect(340, 40, 577, 672);
 
             window.Show();
             called = true;

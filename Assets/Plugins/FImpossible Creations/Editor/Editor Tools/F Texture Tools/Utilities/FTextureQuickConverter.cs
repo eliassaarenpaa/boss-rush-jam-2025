@@ -21,10 +21,11 @@ namespace FIMSpace.FEditor
         {
             FTextureQuickConverter window = (FTextureQuickConverter)GetWindow(typeof(FTextureQuickConverter));
 
-            window.minSize = new Vector2(250f, 225f);
+            window.minSize = new Vector2(250f, 180f);
+            window.maxSize = new Vector2(250f, 250f);
 
             window.titleContent = new GUIContent("PNG Conversion", FTextureToolsGUIUtilities.FindIcon("SPR_TexTool"));
-            window.position = new Rect(200, 100, 250, 225);
+            window.position = new Rect(200, 100, 250, 188f);
             window.Show();
         }
 

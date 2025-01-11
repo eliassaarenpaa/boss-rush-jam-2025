@@ -1,7 +1,7 @@
 ﻿__________________________________________________________________________________________
 
 Package "F Texture Tools"
-Version 1.1.1
+Version 1.1.2
 
 Made by FImpossible Creations - Filip Moeglich
 https://assetstore.unity.com/publishers/37262
@@ -63,6 +63,9 @@ Tools In The Package:
 
 
 ______________________________________________________________
+
+Version 1.1.2
+- Tweaked initial sizes for the tools windows
 
 Version 1.1.1
 - Added possibility for pre and post blur for normal map generator

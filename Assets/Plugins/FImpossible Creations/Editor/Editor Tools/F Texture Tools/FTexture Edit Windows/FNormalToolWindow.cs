@@ -33,7 +33,8 @@ namespace FIMSpace.FTextureTools
             window.previewScale = FEPreview.m_1x1;
             window.drawPreviewScale = true;
 
-            window.position = new Rect( 200, 100, 600, 800 );
+            window.previewSize = 82;
+            window.position = new Rect( 340, 50, 520, 564 );
             window.Show();
             called = true;
         }

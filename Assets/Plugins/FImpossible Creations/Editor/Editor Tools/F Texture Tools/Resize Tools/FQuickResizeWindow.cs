@@ -16,11 +16,11 @@ namespace FIMSpace.FEditor
             FQuickResizeWindow window = (FQuickResizeWindow)GetWindow(typeof(FQuickResizeWindow));
 
             window.minSize = new Vector2(250f, 85f);
-            window.maxSize = window.minSize;
+            window.maxSize = new Vector2(250f, 104f);
 
             window.titleContent = new GUIContent("Resize Textures", FTextureToolsGUIUtilities.FindIcon("SPR_Scale") );
 
-            window.position = new Rect(200, 100, 250, 85);
+            window.position = new Rect(200, 100, 250, 95);
 
             window.Show();
         }

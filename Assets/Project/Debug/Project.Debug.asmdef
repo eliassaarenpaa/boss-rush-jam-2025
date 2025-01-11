@@ -1,7 +1,9 @@
-﻿{
+{
     "name": "Project.Debug",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "Project.Sandboxes"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

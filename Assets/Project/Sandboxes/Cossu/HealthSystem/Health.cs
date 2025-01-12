@@ -17,8 +17,12 @@ public class Health : MonoBehaviour
     #endregion
 
     //Health values
+    [Header("Health Status")]
     [SerializeField] [ReadOnly] private float currentHealth;
     [SerializeField] private float maxHealth;
+
+    [Header("Settings")]
+    [SerializeField] private bool destroyOnKill;
 
     private void Awake()
     {
@@ -50,7 +54,7 @@ public class Health : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); //Clamp the health so it doesn't go over max
         if (currentHealth <= 0) Kill(); //If zero -> Kill
 
-        onCurrentHealthChanged(currentHealth, type);
+        onCurrentHealthChanged?.Invoke(currentHealth, type);
     }
 
     public enum MaxHealthChangeType { Add, Decrease, Set}
@@ -76,11 +80,12 @@ public class Health : MonoBehaviour
         }
         if (maxHealth <= 0) Kill();
 
-        onMaxHealthChanged(maxHealth, type);
+        onMaxHealthChanged?.Invoke(maxHealth, type);
     }
 
     public void Kill()
     {
         onKill?.Invoke();
+        if(destroyOnKill) Destroy(gameObject);
     }
 }

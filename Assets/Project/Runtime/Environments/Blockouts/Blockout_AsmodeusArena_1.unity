@@ -21552,57 +21552,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 134983442619981188, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: sensitivity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1995080674365990623, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: m_ClearFlags
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1995080674365990623, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: field of view
-      value: 80
-      objectReference: {fileID: 0}
-    - target: {fileID: 1995080674365990623, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1995080674365990623, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1995080674365990623, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.3301887
-      objectReference: {fileID: 0}
     - target: {fileID: 2178934336077582203, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 2178934336077582203, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2440523850928034369, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: gravityAccelSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 2440523850928034369, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: maxGravityMagnitude
-      value: 120
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: groundAccel
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: airMoveSpeed
-      value: 65
-      objectReference: {fileID: 0}
-    - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: groundMoveSpeed
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7246289577844044365, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21643,14 +21595,6 @@ PrefabInstance:
     - target: {fileID: 7246289577844044365, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485056640789582828, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: jumpVerticalForce
-      value: 55
-      objectReference: {fileID: 0}
-    - target: {fileID: 8485056640789582828, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
-      propertyPath: airJumpForwardForce
-      value: 30
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

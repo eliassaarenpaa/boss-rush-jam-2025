@@ -21584,13 +21584,25 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2440523850928034369, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
+      propertyPath: gravityAccelSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440523850928034369, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
+      propertyPath: maxGravityMagnitude
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
+      propertyPath: groundAccel
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: airMoveSpeed
-      value: 45
+      value: 65
       objectReference: {fileID: 0}
     - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: groundMoveSpeed
-      value: 27.5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7246289577844044365, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -21634,7 +21646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8485056640789582828, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: jumpVerticalForce
-      value: 45
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 8485056640789582828, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: airJumpForwardForce

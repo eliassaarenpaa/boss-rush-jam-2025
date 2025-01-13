@@ -21606,7 +21606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: groundAccel
-      value: 15
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4030163085188701981, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       propertyPath: airMoveSpeed

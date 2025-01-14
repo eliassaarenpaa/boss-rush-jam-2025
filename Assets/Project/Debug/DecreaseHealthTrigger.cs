@@ -15,7 +15,7 @@ public class DecreaseHealthTrigger : MonoBehaviour
     {
         if(other.gameObject.TryGetComponent<Health>(out Health health))
         {
-            health.ChangeCurrentHealth(decreaseAmount, Health.CurrentHealthChangeType.Decrease);
+            health.ChangeCurrentHealth(decreaseAmount, ScriptableFloat.FloatChangeType.Decrease);
         }
     }
 }

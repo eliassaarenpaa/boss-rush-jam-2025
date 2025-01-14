@@ -41,7 +41,7 @@ namespace Project.Sandboxes.Cossu.CombatDemo
             if (other.tag == "Player") return;
             if(other.TryGetComponent<Health>(out Health health))
             {
-                health.ChangeCurrentHealth(weaponBaseStats.weaponDamage, Health.CurrentHealthChangeType.Damage);
+                DealDamage(health);
                 if (pierceAmount > 0) //Handle piercing here
                 {
                     pierceAmount -= 1;
@@ -56,6 +56,12 @@ namespace Project.Sandboxes.Cossu.CombatDemo
             {
                 Destroy(gameObject); //Ricochet not implemented yet.
             }
+        }
+
+        private void DealDamage(Health targetHealth)
+        {
+            targetHealth.ChangeCurrentHealth(weaponBaseStats.weaponDamage, ScriptableFloat.FloatChangeType.Decrease);
+
         }
     }
 }

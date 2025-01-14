@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponType: 0
   kinematicWeaponModifiers:
-    projectileScript: {fileID: 0}
     kinematicProjectileSpeed: 50
     kinematicProjectileRicochetAmount: 0
     kinematicProjectilePierceAmount: 1

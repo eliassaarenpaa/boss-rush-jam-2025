@@ -275,11 +275,11 @@ RectTransform:
   - {fileID: 1051751919}
   m_Father: {fileID: 1631390022}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -296.0368, y: 297.8288}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 115.963196, y: -63.171204}
   m_SizeDelta: {x: 360, y: 26}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &512603665
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2fdea13c3886d4aabff7eaccf4f261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackedHealth: {fileID: 907667360}
+  currentHealth: {fileID: 11400000, guid: 1d5de7ada40016c4194fe3254b82f5c5, type: 2}
+  maxHealth: {fileID: 11400000, guid: 526c552e69b67b04ca42b2b7ad778e81, type: 2}
   slider: {fileID: 512603666}
 --- !u!114 &512603666
 MonoBehaviour:
@@ -669,8 +670,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52aa2d086f9fc54abac792daf3f5c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 100
+  currentHealth: {fileID: 11400000, guid: 0c294914e1f369749abf0b955be0e3c4, type: 2}
+  maxHealth: {fileID: 11400000, guid: bb5235ea5376d2c4c985cb2ec506e95d, type: 2}
   destroyOnKill: 1
 --- !u!65 &616712997
 BoxCollider:
@@ -763,8 +764,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52aa2d086f9fc54abac792daf3f5c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 100
+  currentHealth: {fileID: 11400000, guid: 1d5de7ada40016c4194fe3254b82f5c5, type: 2}
+  maxHealth: {fileID: 11400000, guid: 526c552e69b67b04ca42b2b7ad778e81, type: 2}
   destroyOnKill: 0
 --- !u!114 &907667361
 MonoBehaviour:
@@ -781,6 +782,7 @@ MonoBehaviour:
   weaponObject: {fileID: 11400000, guid: 1548a519a38227d40bc23a3629dab0db, type: 2}
   weaponUtilityCards: {fileID: 0}
   projectileSpawn: {fileID: 1527610646}
+  lastAttackTime: 0
 --- !u!1 &985515540
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,8 +904,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e52aa2d086f9fc54abac792daf3f5c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: 0
-  maxHealth: 100
+  currentHealth: {fileID: 11400000, guid: 1d76bad526a7e6a44b4675a38613a3df, type: 2}
+  maxHealth: {fileID: 11400000, guid: 5b8e5a7fa3685d34781e2741ec8792c9, type: 2}
   destroyOnKill: 1
 --- !u!1 &1042443120
 GameObject:

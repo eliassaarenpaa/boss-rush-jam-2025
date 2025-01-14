@@ -7,36 +7,21 @@ namespace Project.Sandboxes.Cossu.CombatDemo
     [RequireComponent(typeof(Slider))]
     public class HealthBarSlider : MonoBehaviour
     {
-        [SerializeField] Health trackedHealth;
+        [SerializeField] ScriptableFloat currentHealth;
+        [SerializeField] ScriptableFloat maxHealth;
         [SerializeField] Slider slider;
 
         private void Awake()
         {
             slider = GetComponent<Slider>();
-            slider.maxValue = trackedHealth.GetMaxHealth();
-            slider.value = trackedHealth.GetCurrentHealth();
+            slider.maxValue = maxHealth.Value;
+            slider.value = currentHealth.Value;
         }
 
-        private void OnEnable()
+        private void Update()
         {
-            trackedHealth.onCurrentHealthChanged += UpdateValue;
-            trackedHealth.onMaxHealthChanged += UpdateMaxValue;
-        }
-
-        private void OnDisable()
-        {
-            trackedHealth.onCurrentHealthChanged -= UpdateValue;
-            trackedHealth.onMaxHealthChanged -= UpdateMaxValue;
-        }
-
-        private void UpdateValue(float newValue, Health.CurrentHealthChangeType type)
-        {
-            slider.value = newValue;
-        }
-
-        private void UpdateMaxValue(float newValue, Health.MaxHealthChangeType type)
-        {
-            slider.maxValue = newValue;
+            slider.value = currentHealth.Value;
+            slider.maxValue = maxHealth.Value;
         }
     }
 }

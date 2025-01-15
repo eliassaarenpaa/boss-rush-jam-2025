@@ -779,10 +779,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621e42cffc9a67247af636a13dff61fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponObject: {fileID: 11400000, guid: 1548a519a38227d40bc23a3629dab0db, type: 2}
-  weaponUtilityCards: {fileID: 0}
-  projectileSpawn: {fileID: 1527610646}
-  lastAttackTime: 0
+  currentTarot: {fileID: 11400000, guid: 7a075bfcfd53b8840bd11a05d2797b7b, type: 2}
+  projectileSpawn: {fileID: 0}
+  projectileBasePrefab: {fileID: 0}
 --- !u!1 &985515540
 GameObject:
   m_ObjectHideFlags: 0

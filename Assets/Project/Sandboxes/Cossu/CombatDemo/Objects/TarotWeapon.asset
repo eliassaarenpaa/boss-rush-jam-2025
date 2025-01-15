@@ -12,3 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4fb3c8d8975234a9585734edae1035, type: 3}
   m_Name: TarotWeapon
   m_EditorClassIdentifier: 
+  tarotBaseData:
+    magazineSize: 0
+    fireRate: 0
+    reloadTime: 0
+    projectileDamage: 0
+    projectileSpeed: 0
+    projectileRadius: 0
+    projectileRicochet: 0
+    projectileAmount: 0
+    projectileSpread: 0
+  movementComponent: {fileID: 0}
+  otherComponents: []

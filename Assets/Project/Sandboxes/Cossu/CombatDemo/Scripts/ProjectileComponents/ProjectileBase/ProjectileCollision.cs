@@ -8,20 +8,28 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SphereCollider))]
-public class ProjectileCollision : ProjectileComponent
+public class ProjectileCollision : MonoBehaviour
 {
-    public override void OnSetup()
+    ProjectileEvents projectileEvents;
+    bool configured;
+    public void Configure(TarotDataObject tarotDataObject, ProjectileEvents pEvents)
     {
+        //Setup collider
         SphereCollider collider = GetComponent<SphereCollider>();
-        collider.radius = base.tarotDataObject.tarotBaseData.projectileRadius;
+        collider.radius = tarotDataObject.tarotBaseData.projectileRadius;
         collider.isTrigger = false;
-
+        
+        //Setup Rigidbody collision detection mode
         GetComponent<Rigidbody>().collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        
+        //Add reference to projectile Events
+        projectileEvents = pEvents;
+        configured = true;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision enter");
-        base.projectileEvents.onProjectileCollisionEnter?.Invoke(collision);
+        if (!configured) return;
+        projectileEvents.onProjectileCollisionEnter?.Invoke(collision);
     }
 }

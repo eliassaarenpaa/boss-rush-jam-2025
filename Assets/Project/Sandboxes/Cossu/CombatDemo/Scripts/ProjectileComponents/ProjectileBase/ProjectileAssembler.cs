@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(ProjectileEvents))]
+[RequireComponent(typeof(ProjectileCollision))]
 public class ProjectileAssembler : MonoBehaviour
 {
     public void AssembleProjectile(TarotDataObject tarotDataObject)
@@ -10,7 +11,10 @@ public class ProjectileAssembler : MonoBehaviour
         //Get Events Component
         ProjectileEvents pEvents = GetComponent<ProjectileEvents>();
 
-        //Add additional projectile components from the tarot data object
+        //Configure Collision
+        GetComponent<ProjectileCollision>().Configure(tarotDataObject, pEvents);
+
+        //Add additional projectile components from the tarot data object and pass data to the components
         foreach (MonoScript monoScript in tarotDataObject.projectileComponents)
         {
             if (monoScript == null) continue;

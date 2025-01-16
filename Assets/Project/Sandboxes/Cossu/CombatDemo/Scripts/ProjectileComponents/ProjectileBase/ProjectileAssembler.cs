@@ -23,7 +23,9 @@ public class ProjectileAssembler : MonoBehaviour
             if(typeof(ProjectileComponent).IsAssignableFrom(monoScriptType))
             {
                 ProjectileComponent pComponent = (ProjectileComponent)gameObject.AddComponent(monoScriptType);
-                pComponent.Setup(tarotDataObject, pEvents);
+                pComponent.tarotDataObject = tarotDataObject;
+                pComponent.projectileEvents = pEvents;
+                pComponent.Setup();
             }
         }
     }

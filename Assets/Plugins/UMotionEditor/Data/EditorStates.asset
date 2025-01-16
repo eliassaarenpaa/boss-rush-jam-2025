@@ -16,7 +16,8 @@ MonoBehaviour:
     LoadedProjectGUID:
       valueInternal: 
     RecentlyOpenedProjectPath:
-      valueInternal: Assets\Project\Runtime\Gameplay\Bosses\Asmodeus\Animations
+      valueInternal: Assets\Project\Sandboxes\Shotgun\Animations
     RecentlyOpenedProjectGUIDsList:
+    - valueInternal: 88db1d423ade1154e80030571927f252
     - valueInternal: 3bc25c26a46ca0e4b97c522560b347c3
     - valueInternal: 58358cfb5dfd86f4483117ed31ff3e73

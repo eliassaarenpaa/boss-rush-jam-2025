@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using Sirenix.OdinInspector;
 
 
 [CreateAssetMenu(fileName = "TarotData", menuName = "SO/TarotData")]

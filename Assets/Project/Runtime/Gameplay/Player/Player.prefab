@@ -377,12 +377,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 1995080674365990623}
   extraJumps: 1
-  jumpVerticalForce: 66.6
+  jumpVerticalForce: 30
   airJumpForwardForce: 30
   jumpInputBuffer: 0.15
   jumpCooldown: 0.025
   maxJumpResetCooldown: 0
   coyoteTime: 0.1
+  jumpHeldForceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 125
+      inSlope: -0.07977317
+      outSlope: -0.07977317
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.59314835
+    - serializedVersion: 3
+      time: 1
+      value: 0.2
+      inSlope: -1.7501549
+      outSlope: -1.7501549
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.120000005
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  jumpMaxDuration: 0.25
 --- !u!114 &6158677412196098614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,11 +421,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 1995080674365990623}
-  dashHorizontalForce: 50
+  dashHorizontalForce: 20
   dashVerticalForce: 25
-  extraDashes: 0
+  extraDashes: 1
   dashRegenRate: 1
-  dashCooldown: 0.5
+  dashCooldown: 0.1
+  dashFOVAddon: 7
 --- !u!114 &9008547755388049205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -413,7 +439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5919d3a7d4ef544cae5586f9b3e66f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fovRecoverySpeed: 1
+  fovRecoverySpeed: 50
   allCameras:
   - {fileID: 1995080674365990623}
   - {fileID: 4501134810344095327}
@@ -580,6 +606,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8680268681650282673}
     m_Modifications:
+    - target: {fileID: 4287296664644107263, guid: fbc9bcbe29f6ba44ea01b4699c24848b, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 452789597121843764}
+    - target: {fileID: 4287296664644107263, guid: fbc9bcbe29f6ba44ea01b4699c24848b, type: 3}
+      propertyPath: gravity
+      value: 
+      objectReference: {fileID: 2440523850928034369}
+    - target: {fileID: 4287296664644107263, guid: fbc9bcbe29f6ba44ea01b4699c24848b, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1995080674365990623}
+    - target: {fileID: 4287296664644107263, guid: fbc9bcbe29f6ba44ea01b4699c24848b, type: 3}
+      propertyPath: shotgunJumpDot
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287296664644107263, guid: fbc9bcbe29f6ba44ea01b4699c24848b, type: 3}
+      propertyPath: shotgunJumpForce
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4287296664644107263, guid: fbc9bcbe29f6ba44ea01b4699c24848b, type: 3}
+      propertyPath: useDownwardFacingJump
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4395659021837051700, guid: fbc9bcbe29f6ba44ea01b4699c24848b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.25

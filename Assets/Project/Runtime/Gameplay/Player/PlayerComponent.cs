@@ -13,7 +13,7 @@ namespace Project.Runtime.Gameplay.Player
         protected CharacterGroundCheck GroundCheck;
         protected PlayerGravity Gravity;
         
-        protected void Awake()
+        protected virtual void Awake()
         {
             GroundCheck = GetComponent<CharacterGroundCheck>();
             Rigidbody = GetComponent<Rigidbody>();

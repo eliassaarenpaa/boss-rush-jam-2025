@@ -158,6 +158,8 @@ GameObject:
   - component: {fileID: 2440523850928034369}
   - component: {fileID: 4030163085188701981}
   - component: {fileID: 8485056640789582828}
+  - component: {fileID: 6158677412196098614}
+  - component: {fileID: 9008547755388049205}
   - component: {fileID: 6549124965011570242}
   m_Layer: 0
   m_Name: Player
@@ -381,6 +383,41 @@ MonoBehaviour:
   jumpCooldown: 0.025
   maxJumpResetCooldown: 0
   coyoteTime: 0.1
+--- !u!114 &6158677412196098614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178934336077582203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cabfc57f363643645af6a8ce207cf69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 1995080674365990623}
+  dashHorizontalForce: 50
+  dashVerticalForce: 25
+  extraDashes: 0
+  dashRegenRate: 1
+  dashCooldown: 0.5
+--- !u!114 &9008547755388049205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2178934336077582203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5919d3a7d4ef544cae5586f9b3e66f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fovRecoverySpeed: 1
+  allCameras:
+  - {fileID: 1995080674365990623}
+  - {fileID: 4501134810344095327}
+  mainCamera: {fileID: 1995080674365990623}
 --- !u!114 &6549124965011570242
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ namespace Project.Runtime.Gameplay.Player.Controller
     public class PlayerMovement : PlayerComponent
     {
         [Header("Settings")]
-        [SerializeField] private new Camera camera;
+        [SerializeField] private new UnityEngine.Camera camera;
 
         [Tooltip("Acceleration rate while in the air.")]
         [SerializeField] private float airAccel = 10.0f;

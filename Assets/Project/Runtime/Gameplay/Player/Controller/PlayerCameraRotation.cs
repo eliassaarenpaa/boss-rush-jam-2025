@@ -5,7 +5,7 @@ namespace Project.Runtime.Gameplay.Player.Controller
 {
     public class PlayerCameraRotation : MonoBehaviour
     {
-        [SerializeField] private new Camera camera;
+        [SerializeField] private new UnityEngine.Camera camera;
         [SerializeField] private float sensitivity = 0.1f;
 
         private Vector2 _mouseDeltaAxis = Vector2.zero;

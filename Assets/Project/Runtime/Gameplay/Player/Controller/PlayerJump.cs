@@ -8,7 +8,7 @@ namespace Project.Runtime.Gameplay.Player.Controller
     public class PlayerJump : PlayerComponent
     {
         [Header("Settings")]
-        [SerializeField] private new Camera camera;
+        [SerializeField] private new UnityEngine.Camera camera;
         [SerializeField] private int extraJumps;
         [SerializeField] private float jumpVerticalForce = 35.0f;
         [SerializeField] private float airJumpForwardForce = 15.0f;

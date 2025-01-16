@@ -8,7 +8,7 @@ namespace Project.Runtime.Gameplay.Player.Controller
     public class PlayerJump : PlayerComponent
     {
         [Header("Settings")]
-        [SerializeField] private new UnityEngine.Camera camera;
+        [SerializeField] private new Camera camera;
         [SerializeField] private int extraJumps;
         [SerializeField] private float jumpVerticalForce = 35.0f;
         [SerializeField] private float airJumpForwardForce = 15.0f;
@@ -16,6 +16,8 @@ namespace Project.Runtime.Gameplay.Player.Controller
         [SerializeField] private float jumpCooldown = 0.025f;
         [SerializeField] private float maxJumpResetCooldown;
         [SerializeField] private float coyoteTime = 0.1f;
+        [SerializeField] private AnimationCurve jumpHeldForceCurve;
+        [SerializeField] private float jumpMaxDuration = 0.5f;
 
         [Header("Debug")]
         [ShowInInspector] [ReadOnly] private int _currentJumps;
@@ -43,6 +45,13 @@ namespace Project.Runtime.Gameplay.Player.Controller
             {
                 _isJumping = false;
             }
+            
+            if( PlayerInput.JumpHeld )
+            {
+                var t = Mathf.Clamp01((Time.time - _lastJumpStartTime) / jumpMaxDuration);
+                var force = jumpHeldForceCurve.Evaluate(t);
+                Rigidbody.AddForce( Vector3.up * force, ForceMode.Force );
+            }
         }
 
         private void BufferJump()
@@ -57,6 +66,7 @@ namespace Project.Runtime.Gameplay.Player.Controller
             _currentJumps--;
 
             Gravity.SetAcceleration(0);
+            
             _lastJumpStartTime = Time.time;
             GroundCheck.SetLastGroundedTime(0);
             _lastJumpInputTime = 0;
@@ -86,9 +96,9 @@ namespace Project.Runtime.Gameplay.Player.Controller
             Rigidbody.AddForce(targetJumpVelocity, ForceMode.Impulse);
         }
 
-        private void SetMaxJumps()
+        public void SetMaxJumps()
         {
-            _currentJumps = extraJumps;
+            _currentJumps = extraJumps + 1;
         }
     }
 }

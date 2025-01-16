@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GeneralStates:
     LoadedProjectGUID:
-      valueInternal: 88db1d423ade1154e80030571927f252
+      valueInternal: 
     RecentlyOpenedProjectPath:
       valueInternal: Assets\Project\Sandboxes\Shotgun\Animations
     RecentlyOpenedProjectGUIDsList:

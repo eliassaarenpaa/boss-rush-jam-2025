@@ -11,6 +11,12 @@ namespace Project.Sandboxes.Shotgun
 
         private float _timeSinceLastShot;
 
+        private void Awake()
+        {
+            anim.Stop(shotgun_shoot);
+            _timeSinceLastShot = Time.time;
+        }
+
         private void Update()
         {
             if (Input.GetMouseButtonDown(0))

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: VerticalExpandAppearance
   m_EditorClassIdentifier: 
   tagID: vertexp
-  baseDuration: 0.5
+  baseDuration: 0.1
   startsFromBottom: 1

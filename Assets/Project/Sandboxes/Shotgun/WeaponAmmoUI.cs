@@ -1,3 +1,4 @@
+using System;
 using Febucci.UI.Core;
 using Project.Sandboxes.ScriptableValues;
 using UnityEngine;
@@ -16,6 +17,12 @@ namespace Project.Sandboxes.Shotgun
         {
             ammoTextBackground.startTypewriterMode = TypewriterCore.StartTypewriterMode.FromScriptOnly;
             ammoText.startTypewriterMode = TypewriterCore.StartTypewriterMode.FromScriptOnly;
+        }
+
+        private void Start()
+        {
+            // TODO: Update UI from game entry point in correct order, we cannot be sure that the values are set before this
+            UpdateUI(0); 
         }
 
         private void OnEnable()

@@ -9904,6 +9904,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31e27659e56d2924b94640bf97431246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useDownwardFacingJump: 0
+  gravity: {fileID: 0}
+  mainCamera: {fileID: 0}
+  rb: {fileID: 0}
+  shotgunJumpDot: 0
+  shotgunJumpForce: 0
   firerate: 0.1
   anim: {fileID: 3775453407027491937}
   shootAnimationClip:

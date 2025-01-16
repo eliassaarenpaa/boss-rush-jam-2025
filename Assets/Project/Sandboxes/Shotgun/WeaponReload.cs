@@ -32,7 +32,7 @@ namespace Project.Sandboxes.Shotgun
             }
         }
 
-        private void PlayReloadAnimation()
+        public void PlayReloadAnimation()
         {
             anim.Stop();
             anim.Play(reloadAnimationClip);

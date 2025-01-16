@@ -1,4 +1,6 @@
 using Animancer;
+using Project.Runtime.Core.Input;
+using Project.Runtime.Gameplay.Player.Controller;
 using UnityEngine;
 
 namespace Project.Sandboxes.Shotgun
@@ -7,6 +9,12 @@ namespace Project.Sandboxes.Shotgun
     [RequireComponent(typeof(WeaponReload))]
     public class WeaponShoot : MonoBehaviour
     {
+        [SerializeField] private bool useDownwardFacingJump;
+        [SerializeField] private PlayerGravity gravity;
+        [SerializeField] private Camera mainCamera;
+        [SerializeField] private Rigidbody rb;
+        [SerializeField] private float shotgunJumpDot;
+        [SerializeField] private float shotgunJumpForce;
         private WeaponAmmo _ammo;
         private WeaponReload _reload;
 
@@ -32,13 +40,33 @@ namespace Project.Sandboxes.Shotgun
                 var hasAmmo = _ammo.HasAmmo;
                 var canFire = Time.time - _timeSinceLastShot > firerate;
 
-                if (hasAmmo && canFire && !isReloading)
+                if (!hasAmmo && !_reload.IsReloading)
+                {
+                    // Quality of life: if no ammo, but trying to shoot, reload
+                    _reload.PlayReloadAnimation();
+                }
+                else if (canFire && !isReloading)
                 {
                     _timeSinceLastShot = Time.time;
 
                     PlayShootAnimation();
 
                     _ammo.Consume();
+
+                    if (useDownwardFacingJump)
+                    {
+                        // Jump if facing down
+                        if (Vector3.Dot(mainCamera.transform.forward, Vector3.down) >= shotgunJumpDot )
+                        {
+                            // var vel = rb.linearVelocity;
+                            // vel.y = 0;
+                            // rb.linearVelocity = vel;
+                            gravity.SetAcceleration(0);
+                        
+                            rb.AddForce(Vector3.up * shotgunJumpForce, ForceMode.Impulse);
+                        }    
+                    }
+                    
                 }
             }
         }

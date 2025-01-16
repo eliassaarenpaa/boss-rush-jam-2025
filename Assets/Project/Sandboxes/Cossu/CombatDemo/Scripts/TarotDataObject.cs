@@ -2,15 +2,14 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 
 [CreateAssetMenu(fileName = "TarotData", menuName = "SO/TarotData")]
 public class TarotDataObject : ScriptableObject
 {
     public TarotBaseData tarotBaseData;
-    [Header("Behaviour Components")]
-    public GameObject movementComponent;
-    public List<GameObject> otherComponents; 
+    public List<MonoScript> projectileComponents;
 }
 
 [System.Serializable]
@@ -27,7 +26,7 @@ public class TarotBaseData
     public float projectileDamage;
     public float projectileSpeed;
     public float projectileRadius;
-    public int projectileRicochet;
+    public int projectileRicochetAmount;
 
     [Header("Multi Projectile Properties")]
     //Multi Projectile Stats

@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tarotBaseData:
     magazineSize: 0
-    fireRate: 0
+    fireRate: 10
     reloadTime: 0
     projectileDamage: 0
-    projectileSpeed: 0
-    projectileRadius: 0
-    projectileRicochet: 0
-    projectileAmount: 0
+    projectileSpeed: 10
+    projectileRadius: 1
+    projectileRicochetAmount: 2
+    projectileAmount: 1
     projectileSpread: 0
-  movementComponent: {fileID: 0}
-  otherComponents: []
+  projectileComponents:
+  - {fileID: 11500000, guid: 37324118f727f3f4ab59ff54d8d591e4, type: 3}
+  - {fileID: 11500000, guid: 2f42265a529a44f42bec70901a917ea6, type: 3}

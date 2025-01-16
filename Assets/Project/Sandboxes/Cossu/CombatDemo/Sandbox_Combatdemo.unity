@@ -292,9 +292,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb2fdea13c3886d4aabff7eaccf4f261, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHealth: {fileID: 11400000, guid: 1d5de7ada40016c4194fe3254b82f5c5, type: 2}
-  maxHealth: {fileID: 11400000, guid: 526c552e69b67b04ca42b2b7ad778e81, type: 2}
-  slider: {fileID: 512603666}
 --- !u!114 &512603666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,6 +609,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9062973239506296304, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 613108783}
     - targetCorrespondingSourceObject: {fileID: 8994757104346147997, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
       insertIndex: 0
       addedObject: {fileID: 1527610646}
@@ -623,6 +623,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 907667361}
   m_SourcePrefab: {fileID: 100100000, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
+--- !u!1 &613108782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613108783}
+  m_Layer: 0
+  m_Name: ProjectileSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &613108783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613108782}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.716, y: 0, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1963463973}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &616712994
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,8 +811,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTarot: {fileID: 11400000, guid: 7a075bfcfd53b8840bd11a05d2797b7b, type: 2}
-  projectileSpawn: {fileID: 0}
-  projectileBasePrefab: {fileID: 0}
+  projectileSpawn: {fileID: 613108783}
+  projectileBasePrefab: {fileID: 5005182384283557103, guid: 352231df938be434f8505cbaece3dea5, type: 3}
+  playerHp: {fileID: 0}
 --- !u!1 &985515540
 GameObject:
   m_ObjectHideFlags: 0
@@ -1579,6 +1611,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1963463973 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9062973239506296304, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}
+  m_PrefabInstance: {fileID: 612248156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2015116136 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8994757104346147997, guid: be0f1a8e6da52b24b8953b5090e2234f, type: 3}

@@ -23,5 +23,5 @@ MonoBehaviour:
     projectileAmount: 1
     projectileSpread: 0
   projectileComponents:
+  - {fileID: 11500000, guid: 0a7ada513690ef34ab91a6df7a392b9e, type: 3}
   - {fileID: 11500000, guid: 37324118f727f3f4ab59ff54d8d591e4, type: 3}
-  - {fileID: 11500000, guid: 2f42265a529a44f42bec70901a917ea6, type: 3}

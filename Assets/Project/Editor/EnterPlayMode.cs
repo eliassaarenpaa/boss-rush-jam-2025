@@ -6,14 +6,14 @@ namespace Project.Editor
 {
     public static class EnterPlayMode 
     {
-        [MenuItem("Enter Play Mode/Normal Boot #e")]
+        [MenuItem("Enter Play Mode/Normal Boot #&e")]
         private static void ToggleNormalBoot()
         {
             Bootstrapper.config.isNormalBoot = true;
             ToggleBoot();
         }
         
-        [MenuItem("Enter Play Mode/Debug Boot #w")]
+        [MenuItem("Enter Play Mode/Debug Boot #&w")]
         private static void ToggleDebugBoot()
         {
             Bootstrapper.config.isNormalBoot = false;

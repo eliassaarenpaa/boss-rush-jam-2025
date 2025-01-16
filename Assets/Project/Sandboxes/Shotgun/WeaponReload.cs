@@ -23,8 +23,7 @@ namespace Project.Sandboxes.Shotgun
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
-                // Dont let player interrupt reload animation
-                if (IsReloading)
+                if (IsReloading || _ammo.IsMax)
                 {
                     return;
                 }

@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f4fb3c8d8975234a9585734edae1035, type: 3}
-  m_Name: TarotWeapon
+  m_Script: {fileID: 11500000, guid: cc2f47367eb332641a41c7cc534aea5a, type: 3}
+  m_Name: TarotObject
   m_EditorClassIdentifier: 
   tarotBaseData:
     magazineSize: 0
@@ -18,10 +18,15 @@ MonoBehaviour:
     reloadTime: 0
     projectileDamage: 0
     projectileSpeed: 10
-    projectileRadius: 1
-    projectileRicochetAmount: 2
+    projectileRadius: 0
+    projectileRicochetAmount: 0
     projectileAmount: 1
     projectileSpread: 0
   projectileComponents:
-  - {fileID: 11500000, guid: 0a7ada513690ef34ab91a6df7a392b9e, type: 3}
-  - {fileID: 11500000, guid: 37324118f727f3f4ab59ff54d8d591e4, type: 3}
+  - rid: 7386730644822556993
+  references:
+    version: 2
+    RefIds:
+    - rid: 7386730644822556993
+      type: {class: ProjectileBasicMovement, ns: , asm: Project.Sandboxes.Cossu.CombatDemo}
+      data: 

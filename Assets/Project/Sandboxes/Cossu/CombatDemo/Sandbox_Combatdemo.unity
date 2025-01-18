@@ -807,13 +807,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 907667348}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 621e42cffc9a67247af636a13dff61fb, type: 3}
+  m_Script: {fileID: 11500000, guid: 88987b8f31c30844e9a3ed8fe180050a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTarot: {fileID: 11400000, guid: 7a075bfcfd53b8840bd11a05d2797b7b, type: 2}
+  currentTarot: {fileID: 11400000, guid: b73eef9e59030d74c8dc5db1c8b1a658, type: 2}
   projectileSpawn: {fileID: 613108783}
-  projectileBasePrefab: {fileID: 5005182384283557103, guid: 352231df938be434f8505cbaece3dea5, type: 3}
-  playerHp: {fileID: 0}
+  projectileBasePrefab: {fileID: 3410571554870367404, guid: c863ff8bd8663e34ab0b3beb81ca8e69, type: 3}
+  playerHp: {fileID: 11400000, guid: 1d5de7ada40016c4194fe3254b82f5c5, type: 2}
 --- !u!1 &985515540
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,16 +1,13 @@
 using UnityEngine;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
-using Sirenix.OdinInspector;
+using System;
 
-
-[CreateAssetMenu(fileName = "TarotData", menuName = "SO/TarotData")]
-public class TarotDataObject : ScriptableObject
+[CreateAssetMenu(fileName = "TarotObject", menuName = "SO/TarotDataObject", order = 0)]
+public class TarotDataScriptable : ScriptableObject
 {
     public TarotBaseData tarotBaseData;
-    public List<MonoScript> projectileComponents;
+    [SerializeReference]
+    public List<SerializableProjectileComponent> projectileComponents = new List<SerializableProjectileComponent>();
 }
 
 [System.Serializable]

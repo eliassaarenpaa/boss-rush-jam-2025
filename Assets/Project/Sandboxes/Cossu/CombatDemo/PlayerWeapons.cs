@@ -1,9 +1,9 @@
-using UnityEngine;
 using Project.Runtime.Core.Input;
+using UnityEngine;
 
 public class PlayerWeapons : MonoBehaviour
 {
-    [SerializeField] TarotDataObject currentTarot;
+    [SerializeField] TarotDataScriptable currentTarot;
     [SerializeField] Transform projectileSpawn;
     [SerializeField] GameObject projectileBasePrefab;
     [SerializeField] ScriptableFloat playerHp;
@@ -14,7 +14,7 @@ public class PlayerWeapons : MonoBehaviour
         //Check input
         if (PlayerInput.Attack)
         {
-            if(1f/currentTarot.tarotBaseData.fireRate + lastShootTime < Time.time) //Fire rate is ok
+            if (1f / currentTarot.tarotBaseData.fireRate + lastShootTime < Time.time) //Fire rate is ok
             {
                 lastShootTime = Time.time;
                 Shoot();
@@ -26,10 +26,10 @@ public class PlayerWeapons : MonoBehaviour
     {
         //Spawn projectileBasePrefab.
         //Pass projectile data holder the data of the projectile
-        for(int amountOfProjectiles = 0; amountOfProjectiles < currentTarot.tarotBaseData.projectileAmount; amountOfProjectiles++)
+        for (int amountOfProjectiles = 0; amountOfProjectiles < currentTarot.tarotBaseData.projectileAmount; amountOfProjectiles++)
         {
             ProjectileAssembler pAssembler = Instantiate(projectileBasePrefab, projectileSpawn.position, projectileSpawn.rotation).GetComponent<ProjectileAssembler>();
-            pAssembler.AssembleProjectile(currentTarot);
+            pAssembler.Assemble(currentTarot);
         }
 
     }

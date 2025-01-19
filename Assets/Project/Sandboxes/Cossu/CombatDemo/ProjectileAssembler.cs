@@ -1,21 +1,34 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using System.Linq;
 
 [RequireComponent(typeof(SerializableMonoBehaviourContainer))]
 public class ProjectileAssembler : MonoBehaviour
 {
     public void Assemble(TarotDataScriptable sourceData)
     {
-        TarotDataScriptable localData = ScriptableObject.Instantiate(sourceData); //Make a copy of the scriptable object
+        //Make a copy of the scriptable object.
+        TarotDataScriptable localData = ScriptableObject.Instantiate(sourceData);
+
+        //Get reference to the component container
         SerializableMonoBehaviourContainer componentContainer = GetComponent<SerializableMonoBehaviourContainer>();
 
-        //Data injection for each projectile component
-        foreach(SerializableProjectileComponent component in localData.projectileComponents)
+        //Add required components
+        List<RequiredProjectileComponent> requiredComponents = new RequiredProjectileComponentOrder().components;
+
+        foreach (RequiredProjectileComponent component in requiredComponents) //Data injection for each required projectile component
+        {
+            component.tarotData = localData;
+            componentContainer.AddSerializableMonoBehaviour(component);
+        }
+
+        //Add Custom Components to the container
+        foreach(CustomProjectileComponent component in localData.customProjectileComponents) //Data injection for each custom projectile component
         {
             component.tarotData = localData;
         }
+        componentContainer.AddSerializableMonoBehaviour(localData.customProjectileComponents);
 
-        //Add Components To The Container
-        componentContainer.AddSerializableMonoBehaviour(localData.projectileComponents);
     }
 }

@@ -15,7 +15,7 @@ public class ProjectileAssembler : MonoBehaviour
         SerializableMonoBehaviourContainer componentContainer = GetComponent<SerializableMonoBehaviourContainer>();
 
         //Add required components
-        List<RequiredProjectileComponent> requiredComponents = new RequiredProjectileComponentOrder().components;
+        List<RequiredProjectileComponent> requiredComponents = new RequiredProjectileComponents().components;
 
         foreach (RequiredProjectileComponent component in requiredComponents) //Data injection for each required projectile component
         {

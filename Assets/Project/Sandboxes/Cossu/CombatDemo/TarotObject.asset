@@ -22,11 +22,11 @@ MonoBehaviour:
     projectileRicochetAmount: 0
     projectileAmount: 1
     projectileSpread: 0
-  projectileComponents:
-  - rid: 7386730644822556993
+  customProjectileComponents:
+  - rid: 7386730665885302920
   references:
     version: 2
     RefIds:
-    - rid: 7386730644822556993
+    - rid: 7386730665885302920
       type: {class: ProjectileBasicMovement, ns: , asm: Project.Sandboxes.Cossu.CombatDemo}
       data: 

@@ -7,7 +7,7 @@ public class TarotDataScriptable : ScriptableObject
 {
     public TarotBaseData tarotBaseData;
     [SerializeReference]
-    public List<SerializableProjectileComponent> projectileComponents = new List<SerializableProjectileComponent>();
+    public List<CustomProjectileComponent> customProjectileComponents = new List<CustomProjectileComponent>();
 }
 
 [System.Serializable]

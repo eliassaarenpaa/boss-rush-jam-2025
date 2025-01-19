@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public abstract class SerializableProjectileComponent : SerializableMonobehaviour
+public abstract class CustomProjectileComponent : SerializableMonobehaviour
 {
     [NonSerialized] public TarotDataScriptable tarotData; //Projectile Base Data
 }

@@ -1,5 +1,4 @@
-﻿using Project.Runtime.Core.Input;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Project.Runtime.Gameplay.Player.Controller
@@ -12,9 +11,6 @@ namespace Project.Runtime.Gameplay.Player.Controller
         [Tooltip("x = approaching max gravity, y = gravity multiplier")]
         public AnimationCurve gravityAccelCurve;
         public float inAirAccelCurveMultiplier = 10.0f;
-        public float slopeAccelCurveMultiplier;
-        public float slopeAngle = 35.0f;
-        public float slopeSlideAccelSpeed = 50.0f;
         [ShowInInspector] [ReadOnly] private float _acceleration;
 
         [Header("Debug")]
@@ -22,7 +18,6 @@ namespace Project.Runtime.Gameplay.Player.Controller
 
         private void FixedUpdate()
         {
-
             var x = Mathf.InverseLerp(0, maxGravityMagnitude, _force.magnitude);
             var y = gravityAccelCurve.Evaluate(x) * inAirAccelCurveMultiplier;
 
@@ -34,11 +29,11 @@ namespace Project.Runtime.Gameplay.Player.Controller
             {
                 Rigidbody.AddForce(_force);
             }
-
-            if (GroundCheck.IsGrounded)
-            {
-                SetAcceleration(0);
-            }
+            
+            // if (GroundCheck.IsGrounded)
+            // {
+            //     SetAcceleration(0);
+            // }
         }
 
         public void SetAcceleration(float value)

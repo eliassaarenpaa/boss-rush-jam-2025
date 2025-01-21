@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc2f47367eb332641a41c7cc534aea5a, type: 3}
+  m_Name: TarotObject
+  m_EditorClassIdentifier: 
+  tarotBaseData:
+    magazineSize: 0
+    fireRate: 10
+    reloadTime: 0
+    projectileDamage: 0
+    projectileSpeed: 10
+    projectileRadius: 0
+    projectileRicochetAmount: 0
+    projectileAmount: 1
+    projectileSpread: 0
+  customProjectileComponents:
+  - rid: 7386730665885302920
+  references:
+    version: 2
+    RefIds:
+    - rid: 7386730665885302920
+      type: {class: ProjectileBasicMovement, ns: , asm: Project.Sandboxes.Cossu.CombatDemo}
+      data: 

@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7dd248dd8af2a8478aa6e86de6c0d8f, type: 3}
-  m_Name: MaxAmmo_IntValue
+  m_Script: {fileID: 11500000, guid: d0fcde2b72ba4f3ba097728b467605ac, type: 3}
+  m_Name: FloatValue
   m_EditorClassIdentifier: 
   _oldValue: 0
-  _value: 7
-  useMin: 1
-  useMax: 1
-  minValue: 0
-  maxValue: 999
+  _value: 0
+  clampValue: 1
+  minValue: 1
+  maxValue: 1

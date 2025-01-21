@@ -1,4 +1,5 @@
 using Project.Sandboxes.ScriptableValues;
+using Project.Sandboxes.ScriptableValues.OperationType;
 using UnityEngine;
 
 namespace Project.Sandboxes.Shotgun
@@ -8,7 +9,7 @@ namespace Project.Sandboxes.Shotgun
         [SerializeField] private IntValue currentAmmo;
         [SerializeField] private IntValue maxAmmo;
         
-        public bool HasAmmo => currentAmmo.isGreaterThanZero;
+        public bool HasAmmo => currentAmmo.IsGreaterThanZero;
         public bool IsMax => currentAmmo.Value == maxAmmo.Value;
         
         private void Awake()
@@ -21,13 +22,12 @@ namespace Project.Sandboxes.Shotgun
         /// </summary>
         public void Reload()
         {
-            currentAmmo.SetValue(maxAmmo.Value);
+            currentAmmo.Modify<Set>(maxAmmo.Value);
         }
     
         public void Consume()
         {
             currentAmmo.Value--;
         }
-
     }
 }

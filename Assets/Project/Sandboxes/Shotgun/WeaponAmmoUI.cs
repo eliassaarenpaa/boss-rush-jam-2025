@@ -1,4 +1,3 @@
-using System;
 using Febucci.UI.Core;
 using Project.Sandboxes.ScriptableValues;
 using UnityEngine;

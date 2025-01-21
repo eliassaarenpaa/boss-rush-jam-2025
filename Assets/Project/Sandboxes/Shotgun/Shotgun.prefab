@@ -9962,7 +9962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentAmmo: {fileID: 11400000, guid: 40b52615dc4933d4d8bffbc9d0d54fbd, type: 2}
-  maxAmmo: {fileID: 11400000, guid: 8262b4459ea107347a7da7684b939e91, type: 2}
+  maxAmmo: {fileID: 11400000, guid: a92e044055a89af4dad429c7b9e2cc33, type: 2}
 --- !u!1 &7832217002919517505
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e7dd248dd8af2a8478aa6e86de6c0d8f, type: 3}
-  m_Name: MaxAmmo_IntValue
+  m_Name: HealthValue
   m_EditorClassIdentifier: 
   _oldValue: 0
-  _value: 7
+  _value: 100
   useMin: 1
   useMax: 1
   minValue: 0
-  maxValue: 999
+  maxValue: 100

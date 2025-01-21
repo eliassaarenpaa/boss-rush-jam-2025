@@ -12,12 +12,12 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
+  - EnemyDamageable
+  - PlayerDamageable
   - DestroyItDebris
   - Overlay
-  - 
-  - 
+  - EnemyProjectile
+  - PlayerProjectile
   - 
   - 
   - 

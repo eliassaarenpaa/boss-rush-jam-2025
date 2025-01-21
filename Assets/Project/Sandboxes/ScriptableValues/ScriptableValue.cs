@@ -6,10 +6,11 @@ namespace Project.Sandboxes.ScriptableValues
 {
     public class ScriptableValue<T> : ScriptableObject
     {
-        private T _value;
+        [OnValueChanged("HandleValueChanged")]
+        [SerializeField] private T _value;
+        
         public Action<T> OnValueChanged;
 
-        [ShowInInspector]
         public T Value
         {
             get => _value;
@@ -23,8 +24,13 @@ namespace Project.Sandboxes.ScriptableValues
 
                 _value = value;
 
-                OnValueChanged?.Invoke(_value);
+                HandleValueChanged();
             }
+        }
+        
+        private void HandleValueChanged()
+        {
+            OnValueChanged?.Invoke(_value);
         }
 
         public void SetValue(T value)

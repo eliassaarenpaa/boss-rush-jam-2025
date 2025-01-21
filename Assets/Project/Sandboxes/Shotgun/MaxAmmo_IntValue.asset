@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be31ff9d7ae04f30bac665fb07d1d6ec, type: 3}
   m_Name: MaxAmmo_IntValue
   m_EditorClassIdentifier: 
+  _value: 3

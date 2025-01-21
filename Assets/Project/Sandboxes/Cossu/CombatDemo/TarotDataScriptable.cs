@@ -2,10 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-[CreateAssetMenu(fileName = "TarotObject", menuName = "SO/TarotDataObject", order = 0)]
+[CreateAssetMenu(fileName = "TarotObject", menuName = "SO/TarotDataObject")]
 public class TarotDataScriptable : ScriptableObject
 {
+    public ProjectileStats projectileStats;
     public TarotBaseData tarotBaseData;
+    public float test;
     [SerializeReference]
     public List<CustomProjectileComponent> customProjectileComponents = new List<CustomProjectileComponent>();
 }

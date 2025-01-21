@@ -12,21 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc2f47367eb332641a41c7cc534aea5a, type: 3}
   m_Name: TarotObject
   m_EditorClassIdentifier: 
+  projectileDamage:
+    type: 3
+    baseValue: 0
   tarotBaseData:
     magazineSize: 0
-    fireRate: 10
+    fireRate: 0
     reloadTime: 0
     projectileDamage: 0
-    projectileSpeed: 10
+    projectileSpeed: 0
     projectileRadius: 0
     projectileRicochetAmount: 0
-    projectileAmount: 1
+    projectileAmount: 0
     projectileSpread: 0
-  customProjectileComponents:
-  - rid: 7386730665885302920
+  customProjectileComponents: []
   references:
     version: 2
-    RefIds:
-    - rid: 7386730665885302920
-      type: {class: ProjectileBasicMovement, ns: , asm: Project.Sandboxes.Cossu.CombatDemo}
-      data: 
+    RefIds: []

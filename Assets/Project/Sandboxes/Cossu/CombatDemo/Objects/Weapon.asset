@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d20491138af6a2c469a2cb3eb35be138, type: 3}
+  m_Name: Weapon
+  m_EditorClassIdentifier: 
+  equippedTarot: {fileID: 11400000, guid: b73eef9e59030d74c8dc5db1c8b1a658, type: 2}
+  equippedCharms:
+  - {fileID: 11400000, guid: a7d9817c6419b844ca521decb533381e, type: 2}

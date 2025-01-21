@@ -21,7 +21,7 @@ namespace Project.Sandboxes.Shotgun
         private void Start()
         {
             // TODO: Update UI from game entry point in correct order, we cannot be sure that the values are set before this
-            UpdateUI(0); 
+            UpdateUI( new OperationResult<int>() ); 
         }
 
         private void OnEnable()
@@ -36,7 +36,7 @@ namespace Project.Sandboxes.Shotgun
             maxAmmo.OnValueChanged -= UpdateUI;
         }
 
-        private void UpdateUI(int _)
+        private void UpdateUI(OperationResult<int> operationResult)
         {
             var newAmmoText = currentAmmo.Value + "/" + maxAmmo.Value;
             

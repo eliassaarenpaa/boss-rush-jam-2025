@@ -97,6 +97,8 @@ namespace Project.Sandboxes.ScriptableValues
         public T GetMinValue() => minValue;
         public T GetMaxValue() => maxValue;
         
+        public new Action<OperationResult<T>> OnValueChanged;
+        
         public void SetMinValue(T value)
         {
             minValue = value;
@@ -116,6 +118,7 @@ namespace Project.Sandboxes.ScriptableValues
             new TOperation().Execute(Value, modifierValue.Value, out result);
             OnOperationExecuted(ref result);
             Value = result.newValue;
+            OnValueChanged?.Invoke(result);
         }
 
         public void Modify<TOperation>(ScriptableValue<T> modifierValue) where TOperation : Operation, new()
@@ -132,6 +135,7 @@ namespace Project.Sandboxes.ScriptableValues
             new TOperation().Execute(Value, modifierValue, out result);
             OnOperationExecuted(ref result);
             Value = result.newValue;
+            OnValueChanged?.Invoke(result);
         }
         
         public void Modify<TOperation>(T modifierValue) where TOperation : Operation, new()

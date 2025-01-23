@@ -24,7 +24,7 @@ namespace Project.Sandboxes.MeatballBossfight
 
         public void ScaleExplosion(float scale)
         {
-            _scale = Vector3.one * scale * 1.25f;
+            _scale = Vector3.one * scale;
         }
     }
 }

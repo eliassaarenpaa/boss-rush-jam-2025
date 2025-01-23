@@ -1,4 +1,7 @@
+using Animancer;
+using DG.Tweening;
 using Project.Sandboxes.ScriptableValues;
+using Sirenix.Utilities;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,6 +10,7 @@ namespace Project.Sandboxes.MeatballBossfight
     [RequireComponent(typeof(Damageable))]
     public class MeatballSplitter : MonoBehaviour
     {
+        [SerializeField] private ClipTransition deathAnimation;
         [SerializeField] private int splitCount = 2;
         [SerializeField] private IntValue initialHealthValue;
         [SerializeField] private bool _isFirstMeatball;
@@ -65,8 +69,7 @@ namespace Project.Sandboxes.MeatballBossfight
                 {
                     if (operationResult.newValue <= 0)
                     {
-                        newMeatball.GetComponent<MeatballExplodeOnDeath>()?.Explode();
-                        Destroy(newMeatball.gameObject);
+                        DestroyMeatball(newMeatball);
                     }
                     else if (operationResult.newValue <= splitHealthThreshold)
                     {
@@ -75,8 +78,19 @@ namespace Project.Sandboxes.MeatballBossfight
                 };
             }
 
-            oldMeatball.GetComponent<MeatballExplodeOnDeath>()?.Explode();
-            Destroy(oldMeatball.gameObject);
+            DestroyMeatball(oldMeatball);
+        }
+        
+        private void DestroyMeatball( GameObject meatball )
+        {
+            // meatball.GetComponentsInChildren<MeatballEyeballOnDeathVFX>().ForEach(eyeball => eyeball?.PlayOnDeathVFX());
+            // meatball.GetComponent<MeatballAnimationVFX>().PlayOnDeathVFX();
+            meatball.GetComponent<MeatballExplodeOnDeath>().Explode();
+            meatball.transform.DOComplete();
+            Destroy(meatball.gameObject, 0.05f);
+            // var animancer = meatball.GetComponent<AnimancerComponent>();
+            // animancer.Stop();
+            // animancer.Play(deathAnimation);
         }
 
         private static Vector3 GetRandomPosAroundOrigin(Vector3 origin)

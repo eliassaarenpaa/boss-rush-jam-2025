@@ -1,3 +1,4 @@
+using System;
 using Project.Sandboxes.ScriptableValues;
 using Project.Sandboxes.ScriptableValues.OperationType;
 using Sirenix.OdinInspector;
@@ -7,6 +8,8 @@ namespace Project.Sandboxes
 {
     public class Damageable : MonoBehaviour
     {
+        public Action<int> onTakeDamage;
+        
         [SerializeField] private IntValue health;
         
         public IntValue Health => health;
@@ -29,6 +32,7 @@ namespace Project.Sandboxes
         {
             Debug.Log($"{gameObject.name} took {damage} damage");
             health.Modify<Subtract>(damage);
+            onTakeDamage?.Invoke(damage);
         }
         
         [FoldoutGroup("Debug")][Button]

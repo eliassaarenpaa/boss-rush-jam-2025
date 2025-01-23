@@ -24,7 +24,7 @@ namespace Project.Sandboxes.MeatballBossfight
 
             if (Physics.Raycast(origin.position, dir, out var hit, range, hitLayer))
             {
-                var damageable = hit.collider?.transform.parent?.parent?.GetComponent<Damageable>();
+                var damageable = hit.collider.GetComponent<Damageable>();
                 if (damageable != null)
                 {
                     damageable.TakeDamage(damage);

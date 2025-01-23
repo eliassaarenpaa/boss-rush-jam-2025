@@ -16,8 +16,8 @@ TagManager:
   - PlayerDamageable
   - DestroyItDebris
   - Overlay
-  - EnemyProjectile
-  - PlayerProjectile
+  - EnemyAttacker
+  - PlayerAttacker
   - 
   - 
   - 

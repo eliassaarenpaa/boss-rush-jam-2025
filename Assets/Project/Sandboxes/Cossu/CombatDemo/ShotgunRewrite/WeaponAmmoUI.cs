@@ -1,0 +1,52 @@
+using Febucci.UI.Core;
+using Project.Sandboxes.ScriptableValues;
+using UnityEngine;
+
+namespace Sandboxes.Cossu.CombatDemo
+{
+    public class WeaponAmmoUI : MonoBehaviour
+    {
+        [SerializeField] private TypewriterCore ammoTextBackground;
+        [SerializeField] private TypewriterCore ammoText;
+
+        [SerializeField] private IntValue currentAmmo;
+        [SerializeField] private IntValue maxAmmo;
+
+        private void Awake()
+        {
+            ammoTextBackground.startTypewriterMode = TypewriterCore.StartTypewriterMode.FromScriptOnly;
+            ammoText.startTypewriterMode = TypewriterCore.StartTypewriterMode.FromScriptOnly;
+        }
+
+        private void Start()
+        {
+            // TODO: Update UI from game entry point in correct order, we cannot be sure that the values are set before this
+            UpdateUI(0);
+        }
+
+        private void OnEnable()
+        {
+            currentAmmo.OnValueChanged += UpdateUI;
+            maxAmmo.OnValueChanged += UpdateUI;
+        }
+
+        private void OnDisable()
+        {
+            currentAmmo.OnValueChanged -= UpdateUI;
+            maxAmmo.OnValueChanged -= UpdateUI;
+        }
+
+        private void UpdateUI(int _)
+        {
+            var newAmmoText = currentAmmo.Value + "/" + maxAmmo.Value;
+
+            ammoText.StopShowingText();
+            ammoText.ShowText(newAmmoText);
+            ammoText.StartShowingText(true);
+
+            ammoTextBackground.StopShowingText();
+            ammoTextBackground.ShowText(newAmmoText);
+            ammoTextBackground.StartShowingText(true);
+        }
+    }
+}

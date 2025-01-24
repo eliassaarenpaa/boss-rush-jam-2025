@@ -14,7 +14,7 @@ namespace Sandboxes.Cossu.CombatDemo
 
         private void Start()
         {
-            WeaponData = playerInventory.TryGetWeaponData();
+            UpdateWeaponData();
         }
 
         private void OnEnable()
@@ -29,7 +29,10 @@ namespace Sandboxes.Cossu.CombatDemo
 
         private void UpdateWeaponData()
         {
-            WeaponData = playerInventory.TryGetWeaponData();
+            if(playerInventory.TryGetWeaponData(out WeaponData weaponData))
+            {
+                WeaponData = weaponData;
+            }
         }
 
         private float lastShootTime = 0f;
@@ -57,7 +60,11 @@ namespace Sandboxes.Cossu.CombatDemo
                 rotation = projectileSpawn.rotation;
                 rotation.eulerAngles += new Vector3(Random.Range(-projectileSpread, projectileSpread), Random.Range(-projectileSpread, projectileSpread));
                 ProjectileAssembler pAssembler = Instantiate(projectileBasePrefab, projectileSpawn.position, rotation).GetComponent<ProjectileAssembler>();
-                pAssembler.Assemble(playerInventory.TryGetWeaponData()); //Pass a new WeaponData instance to the projectile
+                if(playerInventory.TryGetWeaponData(out WeaponData weaponData))
+                {
+                    pAssembler.Assemble(weaponData); //Pass a new WeaponData instance to the projectile
+
+                }
             }
 
         }

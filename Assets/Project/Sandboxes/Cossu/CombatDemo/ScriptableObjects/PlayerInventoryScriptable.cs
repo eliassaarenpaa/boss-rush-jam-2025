@@ -46,22 +46,23 @@ namespace Sandboxes.Cossu.CombatDemo
             OnTarotEquipped?.Invoke();
         }
 
-        public WeaponData TryGetWeaponData() //Function that re-initializes WeaponData and applies equipped modifiers
+        public bool TryGetWeaponData(out WeaponData weaponData) //Function that re-initializes WeaponData and applies equipped modifiers
         {
             if (equippedTarot == null)
             {
                 Debug.LogError("Tarot not equipped. Cannot get Weapon Data");
-                return null;
+                weaponData = null;
+                return false;
             }
             TarotDataScriptable copyTarotData = Instantiate(equippedTarot); //make a copy of the equipped tarot
-            WeaponData newWeaponData = copyTarotData.weaponData; //Copy the weapon data from the tarot to WeaponData so we can modify and add modifiers etc
+            weaponData = copyTarotData.weaponData; //Copy the weapon data from the tarot to WeaponData so we can modify and add modifiers etc
             foreach (CharmDataScriptable charm in equippedCharms) //Apply charm data
             {
-                newWeaponData.baseStats.AddModifiersToStats(charm.modifiers);
-                newWeaponData.customComponents.AddRange(charm.customProjectileComponents);
+                weaponData.baseStats.AddModifiersToStats(charm.modifiers);
+                weaponData.customComponents.AddRange(charm.customProjectileComponents);
             }
             OnWeaponDataInitialized?.Invoke();
-            return newWeaponData;
+            return true;
         }
     }
 }

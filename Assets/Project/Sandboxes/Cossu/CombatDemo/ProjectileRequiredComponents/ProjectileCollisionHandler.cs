@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class ProjectileCollisionHandler : RequiredProjectileComponent
+public class ProjectileCollisionHandler : ProjectileRequiredComponent
 {
     private ProjectileEvents projectileEvents;
     public override void Start()
     {
         //Initialize Projectile Collision
         ProjectileCollider projectileCollider = gameObject.AddComponent<ProjectileCollider>();
-        projectileCollider.Initialize(tarotData.tarotBaseData.projectileRadius, true);
+        projectileCollider.Initialize(weaponStatContainer.ProjectileRadius.TrueValue, true);
 
         projectileEvents = container.GetSerializableComponent<ProjectileEvents>();
 

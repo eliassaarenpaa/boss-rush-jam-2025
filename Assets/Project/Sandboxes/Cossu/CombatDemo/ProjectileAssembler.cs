@@ -6,29 +6,31 @@ using System.Linq;
 [RequireComponent(typeof(SerializableMonoBehaviourContainer))]
 public class ProjectileAssembler : MonoBehaviour
 {
-    public void Assemble(TarotDataScriptable sourceData)
+    public void Assemble(WeaponData sourceData)
     {
-        //Make a copy of the scriptable object.
-        TarotDataScriptable localData = ScriptableObject.Instantiate(sourceData);
-
         //Get reference to the component container
         SerializableMonoBehaviourContainer componentContainer = GetComponent<SerializableMonoBehaviourContainer>();
 
         //Add required components
-        List<RequiredProjectileComponent> requiredComponents = new RequiredProjectileComponents().components;
-
-        foreach (RequiredProjectileComponent component in requiredComponents) //Data injection for each required projectile component
+        List<ProjectileRequiredComponent> requiredComponents = RequiredProjectileComponents.components;
+        foreach (ProjectileRequiredComponent component in requiredComponents) //Data injection for each required projectile component
         {
-            component.tarotData = localData;
+            component.weaponStatContainer = sourceData.baseStats;
             componentContainer.AddSerializableMonoBehaviour(component);
         }
 
-        //Add Custom Components to the container
-        foreach(CustomProjectileComponent component in localData.customProjectileComponents) //Data injection for each custom projectile component
+        //Add Movement Component
+        if (sourceData.projectileMovementComponent != null)
         {
-            component.tarotData = localData;
+            sourceData.projectileMovementComponent.weaponStatContainer = sourceData.baseStats;
+            componentContainer.AddSerializableMonoBehaviour(sourceData.projectileMovementComponent);
         }
-        componentContainer.AddSerializableMonoBehaviour(localData.customProjectileComponents);
 
+        //Add Custom Components to the container
+        foreach(ProjectileCustomComponent component in sourceData.customComponents) //Data injection for each custom projectile component
+        {
+            component.weaponStatContainer = sourceData.baseStats;
+        }
+        componentContainer.AddSerializableMonoBehaviour(sourceData.customComponents);
     }
 }

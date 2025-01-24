@@ -12,11 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5827bba1973c9d47b7a16a27d8a1e97, type: 3}
   m_Name: CharmObject
   m_EditorClassIdentifier: 
+  modifiers: []
   customProjectileComponents: []
-  modifiers:
-  - statType: 3
-    modifierType: 0
-    Value: 50
   references:
     version: 2
     RefIds: []

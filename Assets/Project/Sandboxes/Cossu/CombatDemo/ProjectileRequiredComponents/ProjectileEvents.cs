@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ProjectileEvents : RequiredProjectileComponent
+public class ProjectileEvents : ProjectileRequiredComponent
 {
     public delegate void ProjectileTriggerEnter(Collider collider);
     public ProjectileTriggerEnter projectileTriggerEnter;

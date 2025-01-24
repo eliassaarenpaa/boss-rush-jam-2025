@@ -44,9 +44,8 @@ public class PlayerInventoryScriptable : ScriptableObject
         OnTarotEquipped?.Invoke();
     }
 
-    public WeaponData GetWeaponData() //Function that re-initializes WeaponData and applies equipped modifiers
+    public WeaponData TryGetWeaponData() //Function that re-initializes WeaponData and applies equipped modifiers
     {
-        Debug.Log("Weapon data fetched");
         if (equippedTarot == null)
         {
             Debug.LogError("Tarot not equipped. Cannot get Weapon Data");

@@ -11,7 +11,7 @@ public class PlayerWeapons : MonoBehaviour
 
     private void Start()
     {
-        WeaponData = playerInventory.GetWeaponData();
+        WeaponData = playerInventory.TryGetWeaponData();
     }
 
     private void OnEnable()
@@ -26,7 +26,7 @@ public class PlayerWeapons : MonoBehaviour
 
     private void UpdateWeaponData()
     {
-        WeaponData = playerInventory.GetWeaponData();
+        WeaponData = playerInventory.TryGetWeaponData();
     }
 
     private float lastShootTime = 0f;
@@ -50,7 +50,7 @@ public class PlayerWeapons : MonoBehaviour
         for (int amountOfProjectiles = 0; amountOfProjectiles < WeaponData.baseStats.ProjectileAmount.TrueValue; amountOfProjectiles++)
         {
             ProjectileAssembler pAssembler = Instantiate(projectileBasePrefab, projectileSpawn.position, projectileSpawn.rotation).GetComponent<ProjectileAssembler>();
-            pAssembler.Assemble(playerInventory.GetWeaponData()); //Pass a new WeaponData instance to the projectile
+            pAssembler.Assemble(playerInventory.TryGetWeaponData()); //Pass a new WeaponData instance to the projectile
         }
 
     }

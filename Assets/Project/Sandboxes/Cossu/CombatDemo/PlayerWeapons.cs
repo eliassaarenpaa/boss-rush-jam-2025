@@ -7,6 +7,7 @@ namespace Sandboxes.Cossu.CombatDemo
     {
         [SerializeField] PlayerInventoryScriptable playerInventory;
         WeaponData WeaponData;
+        WeaponStatContainer weaponStats => WeaponData.baseStats;
         [SerializeField] Transform projectileSpawn;
         [SerializeField] GameObject projectileBasePrefab;
         [SerializeField] ScriptableFloat playerHp;
@@ -51,7 +52,11 @@ namespace Sandboxes.Cossu.CombatDemo
             //Pass projectile data holder the data of the projectile
             for (int amountOfProjectiles = 0; amountOfProjectiles < WeaponData.baseStats.ProjectileAmount.TrueValue; amountOfProjectiles++)
             {
-                ProjectileAssembler pAssembler = Instantiate(projectileBasePrefab, projectileSpawn.position, projectileSpawn.rotation).GetComponent<ProjectileAssembler>();
+                float projectileSpread = weaponStats.ProjectileSpread.TrueValue;
+                Quaternion rotation;
+                rotation = projectileSpawn.rotation;
+                rotation.eulerAngles += new Vector3(Random.Range(-projectileSpread, projectileSpread), Random.Range(-projectileSpread, projectileSpread));
+                ProjectileAssembler pAssembler = Instantiate(projectileBasePrefab, projectileSpawn.position, rotation).GetComponent<ProjectileAssembler>();
                 pAssembler.Assemble(playerInventory.TryGetWeaponData()); //Pass a new WeaponData instance to the projectile
             }
 

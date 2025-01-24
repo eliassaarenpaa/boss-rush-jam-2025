@@ -28,10 +28,10 @@ MonoBehaviour:
         baseValue: 0
       ProjectileAmount:
         _statType: 7
-        baseValue: 1
+        baseValue: 10
       ProjectileSpread:
         _statType: 8
-        baseValue: 0
+        baseValue: 10
       ReloadTime:
         _statType: 2
         baseValue: 0

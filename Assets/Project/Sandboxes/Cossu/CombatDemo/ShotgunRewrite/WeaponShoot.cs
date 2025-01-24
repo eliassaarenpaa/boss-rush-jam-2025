@@ -9,6 +9,9 @@ namespace Sandboxes.Cossu.CombatDemo
     [RequireComponent(typeof(WeaponReload))]
     public class WeaponShoot : MonoBehaviour
     {
+        [SerializeField] PlayerInventoryScriptable playerInventory;
+        [SerializeField] Transform projectileSpawn;
+        [SerializeField] GameObject projectileBasePrefab;
         [SerializeField] private bool useDownwardFacingJump;
         [SerializeField] private PlayerGravity gravity;
         [SerializeField] private Camera mainCamera;
@@ -67,6 +70,26 @@ namespace Sandboxes.Cossu.CombatDemo
                         }
                     }
 
+                    if(playerInventory.TryGetWeaponData(out WeaponData WeaponData))
+                    {
+                        WeaponStatContainer weaponStats = WeaponData.baseStats;
+                        //Shooting logic
+                        //Spawn projectileBasePrefab.
+                        //Pass projectile data holder the data of the projectile
+                        for (int amountOfProjectiles = 0; amountOfProjectiles < WeaponData.baseStats.ProjectileAmount.TrueValue; amountOfProjectiles++)
+                        {
+                            float projectileSpread = weaponStats.ProjectileSpread.TrueValue;
+                            Quaternion rotation;
+                            rotation = projectileSpawn.rotation;
+                            rotation.eulerAngles += new Vector3(Random.Range(-projectileSpread, projectileSpread), Random.Range(-projectileSpread, projectileSpread));
+                            ProjectileAssembler pAssembler = Instantiate(projectileBasePrefab, projectileSpawn.position, rotation).GetComponent<ProjectileAssembler>();
+                            if (playerInventory.TryGetWeaponData(out WeaponData weaponData))
+                            {
+                                pAssembler.Assemble(weaponData); //Pass a new WeaponData instance to the projectile
+
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -1,23 +1,26 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public abstract class SerializableMonobehaviour
+namespace Sandboxes.Cossu.CombatDemo
 {
-    protected SerializableMonoBehaviourContainer container;
-    protected GameObject gameObject;
-    protected Transform transform => gameObject.transform;
-
-    public void Initialize(SerializableMonoBehaviourContainer initializingContainer)
+    [Serializable]
+    public abstract class SerializableMonobehaviour
     {
-        container = initializingContainer;
-        gameObject = initializingContainer.gameObject;
-        Start();
+        protected SerializableMonoBehaviourContainer container;
+        protected GameObject gameObject;
+        protected Transform transform => gameObject.transform;
+
+        public void Initialize(SerializableMonoBehaviourContainer initializingContainer)
+        {
+            container = initializingContainer;
+            gameObject = initializingContainer.gameObject;
+            Start();
+        }
+
+        virtual public void Start() { }
+
+        virtual public void Update() { }
+
+        virtual public void FixedUpdate() { }
     }
-
-    virtual public void Start() { }
-
-    virtual public void Update() { }
-
-    virtual public void FixedUpdate() { }
 }

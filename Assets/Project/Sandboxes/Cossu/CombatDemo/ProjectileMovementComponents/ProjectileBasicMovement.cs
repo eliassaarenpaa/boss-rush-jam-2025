@@ -1,17 +1,20 @@
 using UnityEngine;
 
-public class ProjectileBasicMovement : ProjectileMovementComponent
+namespace Sandboxes.Cossu.CombatDemo
 {
-    private float projectileSpeed;
-
-    public override void Start()
+    public class ProjectileBasicMovement : ProjectileMovementComponent
     {
-        ProjectileEvents projectileEvents = container.GetSerializableComponent<ProjectileEvents>();
-        projectileSpeed = weaponStatContainer.StatQuery(StatType.ProjectileSpeed).TrueValue;
-    }
+        private float projectileSpeed;
 
-    public override void Update()
-    {
-        transform.position += transform.forward * projectileSpeed * Time.deltaTime;
+        public override void Start()
+        {
+            ProjectileEvents projectileEvents = container.GetSerializableComponent<ProjectileEvents>();
+            projectileSpeed = weaponStatContainer.StatQuery(StatType.ProjectileSpeed).TrueValue;
+        }
+
+        public override void Update()
+        {
+            transform.position += transform.forward * projectileSpeed * Time.deltaTime;
+        }
     }
 }

@@ -1,62 +1,66 @@
 using UnityEngine;
 using System.Collections.Generic;
-public class SerializableMonoBehaviourContainer : MonoBehaviour
+
+namespace Sandboxes.Cossu.CombatDemo
 {
-    [SerializeReference] List<SerializableMonobehaviour> serializableMonoBehaviours = new List<SerializableMonobehaviour>();
-
-    public void AddSerializableMonoBehaviour<T>(T mono) where T : SerializableMonobehaviour
+    public class SerializableMonoBehaviourContainer : MonoBehaviour
     {
-        serializableMonoBehaviours.Add(mono);
-        mono.Initialize(this);
-    }
+        [SerializeReference] List<SerializableMonobehaviour> serializableMonoBehaviours = new List<SerializableMonobehaviour>();
 
-    public void AddSerializableMonoBehaviour<T>(List<T> monos) where T : SerializableMonobehaviour
-    {
-        foreach(SerializableMonobehaviour mono in monos)
+        public void AddSerializableMonoBehaviour<T>(T mono) where T : SerializableMonobehaviour
         {
             serializableMonoBehaviours.Add(mono);
             mono.Initialize(this);
         }
-    }
 
-    public T GetSerializableComponent<T>() where T : SerializableMonobehaviour
-    {
-        foreach(SerializableMonobehaviour mono in serializableMonoBehaviours)
+        public void AddSerializableMonoBehaviour<T>(List<T> monos) where T : SerializableMonobehaviour
         {
-            if(mono is T component)
+            foreach (SerializableMonobehaviour mono in monos)
             {
-                return component;
+                serializableMonoBehaviours.Add(mono);
+                mono.Initialize(this);
             }
         }
-        return null;
-    }
 
-    public List<T> GetSerializableComponents<T>() where T : SerializableMonobehaviour
-    {
-        List<T> returnComponents = new List<T>();
-        foreach (SerializableMonobehaviour mono in serializableMonoBehaviours)
+        public T GetSerializableComponent<T>() where T : SerializableMonobehaviour
         {
-            if (mono is T component)
+            foreach (SerializableMonobehaviour mono in serializableMonoBehaviours)
             {
-                returnComponents.Add(component);
+                if (mono is T component)
+                {
+                    return component;
+                }
+            }
+            return null;
+        }
+
+        public List<T> GetSerializableComponents<T>() where T : SerializableMonobehaviour
+        {
+            List<T> returnComponents = new List<T>();
+            foreach (SerializableMonobehaviour mono in serializableMonoBehaviours)
+            {
+                if (mono is T component)
+                {
+                    returnComponents.Add(component);
+                }
+            }
+            return returnComponents;
+        }
+
+        private void Update()
+        {
+            foreach (SerializableMonobehaviour mono in serializableMonoBehaviours)
+            {
+                mono.Update();
             }
         }
-        return returnComponents;
-    }
 
-    private void Update()
-    {
-        foreach(SerializableMonobehaviour mono in serializableMonoBehaviours)
+        private void FixedUpdate()
         {
-            mono.Update();
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        foreach (SerializableMonobehaviour mono in serializableMonoBehaviours)
-        {
-            mono.FixedUpdate();
+            foreach (SerializableMonobehaviour mono in serializableMonoBehaviours)
+            {
+                mono.FixedUpdate();
+            }
         }
     }
 }

@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public abstract class ProjectileMovementComponent : ProjectileComponentBase
+namespace Sandboxes.Cossu.CombatDemo
 {
-    
+    [Serializable]
+    public abstract class ProjectileMovementComponent : ProjectileComponentBase
+    {
+
+    }
 }

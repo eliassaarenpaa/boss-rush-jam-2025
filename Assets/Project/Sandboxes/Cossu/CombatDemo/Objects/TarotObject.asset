@@ -42,11 +42,11 @@ MonoBehaviour:
         _statType: 0
         baseValue: 5
     projectileMovementComponent:
-      rid: 7386730782458380429
+      rid: 7386730782458380455
     customComponents: []
   references:
     version: 2
     RefIds:
-    - rid: 7386730782458380429
-      type: {class: ProjectileBasicMovement, ns: , asm: Project.Sandboxes.Cossu.CombatDemo}
+    - rid: 7386730782458380455
+      type: {class: ProjectileBasicMovement, ns: Sandboxes.Cossu.CombatDemo, asm: Project.Sandboxes}
       data: 

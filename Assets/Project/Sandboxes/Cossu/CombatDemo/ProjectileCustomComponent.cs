@@ -1,8 +1,11 @@
 using System;
 using UnityEngine;
 
-[Serializable]
-public abstract class ProjectileCustomComponent : ProjectileComponentBase
+namespace Sandboxes.Cossu.CombatDemo
 {
-    [NonSerialized] public TarotDataScriptable tarotData; //Projectile Base Data
+    [Serializable]
+    public abstract class ProjectileCustomComponent : ProjectileComponentBase
+    {
+        [NonSerialized] public TarotDataScriptable tarotData; //Projectile Base Data
+    }
 }

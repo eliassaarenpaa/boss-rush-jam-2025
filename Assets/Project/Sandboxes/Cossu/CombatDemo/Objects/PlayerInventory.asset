@@ -15,3 +15,4 @@ MonoBehaviour:
   equippedTarot: {fileID: 11400000, guid: b73eef9e59030d74c8dc5db1c8b1a658, type: 2}
   equippedCharms:
   - {fileID: 11400000, guid: a7d9817c6419b844ca521decb533381e, type: 2}
+  - {fileID: 11400000, guid: f4ee95c6a7b9983438732d0afe2cc54d, type: 2}

@@ -31,7 +31,7 @@ MonoBehaviour:
         baseValue: 10
       ProjectileSpread:
         _statType: 8
-        baseValue: 10
+        baseValue: 5
       ReloadTime:
         _statType: 2
         baseValue: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
         baseValue: 5
       MagazineSize:
         _statType: 0
-        baseValue: 5
+        baseValue: 10
     projectileMovementComponent:
       rid: 7386730782458380455
     customComponents: []
